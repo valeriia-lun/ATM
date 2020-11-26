@@ -6,9 +6,9 @@ CreditAccount SessionManager:: _ca;
 UniversalAccount SessionManager:: _ua;
 DepositAccount SessionManager:: _da;
 
-QString SessionManager:: _card;
-QString SessionManager:: _pin;
-bool SessionManager:: _isDeposit;
+QString SessionManager:: _card("");
+QString SessionManager:: _pin("");
+bool SessionManager:: _isDeposit=false;;
 bool SessionManager::_isCredit=false;
 bool SessionManager::_isUniversal=false;
 bool SessionManager::_cardPinOk=false;
@@ -144,8 +144,6 @@ void SessionManager::updateNotesMap(QMap<int, int> m){
     change500(_notesMap[500]-m[500]);
 
     initialiseNotes();
-
-
 }
 //
 
@@ -226,8 +224,10 @@ if(_isDeposit){
          putMoneyOnUniversalAccount(sumPut, _ua);
     }
 }
-
 }
+
+
+
 void SessionManager::withdrawMoney(int sumOut){
 _limitFailure=false;
 _balanceFailure=false;
@@ -263,9 +263,10 @@ _balanceFailure=false;
 
 
     }
-
-
 }
+
+
+
 int SessionManager::getBalance() const{
     int balance;
     if(_isCredit){
@@ -300,13 +301,13 @@ void SessionManager::setLimit(int n){
     }
 
 }
-void SessionManager::putMoneyToMyCredit(int sumOut,CreditAccount a){
+void SessionManager::putMoneyToMyCredit(int sumOut){
     _limitFailure=false;
     _balanceFailure=false;
     if(_isUniversal){
-        if (sumOut < _ua.sumOnBalance()){
-            if(sumOut <_ua.limit()){
-               makeTransactionFromUniversalToCredit(_ua,a,sumOut);
+        if (sumOut <= _ua.sumOnBalance()){
+            if(sumOut <= _ua.limit()){
+               makeTransactionFromUniversalToCredit(_ua,_ca,sumOut);
             }else{
            _limitFailure=true;
             }
@@ -318,13 +319,13 @@ void SessionManager::putMoneyToMyCredit(int sumOut,CreditAccount a){
                                    QObject::tr("Wrong account!\n"),QMessageBox::Ok);
     }
 }
-void SessionManager::putMoneyToMyUniversal(int sumOut,UniversalAccount a){
+void SessionManager::putMoneyToMyUniversal(int sumOut){
     _limitFailure=false;
     _balanceFailure=false;
     if(_isCredit){
-        if (sumOut < _ca.sumOnBalance()){
-            if(sumOut <_ca.limit()){
-                makeTransactionFromCreditToUniversal(_ca,a,sumOut);
+        if (sumOut <= _ca.sumOnBalance()){
+            if(sumOut <= _ca.limit()){
+                makeTransactionFromCreditToUniversal(_ca,_ua,sumOut);
             }else{
              _limitFailure=true;
             }
@@ -336,13 +337,13 @@ void SessionManager::putMoneyToMyUniversal(int sumOut,UniversalAccount a){
                                    QObject::tr("Wrong account!\n"),QMessageBox::Ok);
     }
 }
-void SessionManager::putMoneyToMyDeposit(int sumOut,DepositAccount a){
+void SessionManager::putMoneyToMyDeposit(int sumOut){
     _limitFailure=false;
     _balanceFailure=false;
     if(_isCredit){
-        if (sumOut < _ca.sumOnBalance()){
-            if(sumOut <_ca.limit()){
-                makeTransactionFromCreditToDeposit(_ca,a,sumOut);
+        if (sumOut <= _ca.sumOnBalance()){
+            if(sumOut <=_ca.limit()){
+                makeTransactionFromCreditToDeposit(_ca,_da,sumOut);
             }else{
            _limitFailure=true;
             }
@@ -351,9 +352,9 @@ void SessionManager::putMoneyToMyDeposit(int sumOut,DepositAccount a){
         }
 
     } else if(_isUniversal){
-        if (sumOut < _ua.sumOnBalance()){
-            if(sumOut <_ua.limit()){
-                makeTransactionFromUniversalDeposit(_ua,a,sumOut);
+        if (sumOut <= _ua.sumOnBalance()){
+            if(sumOut <= _ua.limit()){
+                makeTransactionFromUniversalDeposit(_ua,_da,sumOut);
             }else{
                   _limitFailure=true;
             }

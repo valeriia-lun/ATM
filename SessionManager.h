@@ -80,9 +80,9 @@ public:
     int getBalance() const;
     int getLimit() const;
     void setLimit(int);
-    void putMoneyToMyCredit(int,CreditAccount);
-    void putMoneyToMyUniversal(int,UniversalAccount);
-    void putMoneyToMyDeposit(int,DepositAccount);
+    void putMoneyToMyCredit(int);
+    void putMoneyToMyUniversal(int);
+    void putMoneyToMyDeposit(int);
     void putMoneyToAnother(int,QString);
     void putMoneyToAnotherBank(int,QString);
     QString getCard(){return _card;}
