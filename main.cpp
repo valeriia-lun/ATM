@@ -105,9 +105,11 @@
 //}
 int main(int argc, char *argv[])
 {
+
    // testing();
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
+     qDebug()<< selectUserByCard("7777").firstName();
     return a.exec();
 }
