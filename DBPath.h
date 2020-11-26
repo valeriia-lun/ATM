@@ -7,8 +7,8 @@
 
 class DBPath{
 private :
-       // const QString _path="/MAMP/htdocs/ATM/ATM.db";
-      const QString _path="/Users/valerie/Documents/GitHub/ATM/ATM.db";
+        const QString _path="/MAMP/htdocs/ATM/ATM.db";
+      //const QString _path="/Users/valerie/Documents/GitHub/ATM/ATM.db";
 public:
     DBPath(){}
     ~DBPath(){}

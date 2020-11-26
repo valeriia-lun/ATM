@@ -52,8 +52,8 @@ void MainWindow::on_digit_back_clicked()
 void MainWindow::on_digit_OK_clicked()
 {
 
-       unblockCard("7777");
-       unblockCard("8886");
+        unblockCard("7777");
+        unblockCard("8886");
        unblockCard("2355");
 
     if(!ui->card_number->text().isEmpty()){
