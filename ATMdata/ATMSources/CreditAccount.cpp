@@ -62,8 +62,19 @@ const QString& CreditAccount::creditExpiryDate() const{
 }
 
 void CreditAccount::putMoney(double amount) {
-    _creditDept -= amount;
-
+    if(_creditDept == 0){
+        sumOnBalance() += amount;
+    }else{
+        double sum = _creditDept - amount;
+        if(sum <= 0){
+            close();
+            if(sum < 0){
+                sumOnBalance() -= sum;
+            }
+        }else{
+            _creditDept -= amount;
+        }
+    }
 }
 
 
