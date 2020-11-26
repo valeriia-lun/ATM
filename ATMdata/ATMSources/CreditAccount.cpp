@@ -10,7 +10,7 @@ CreditAccount::CreditAccount(int creditTerm, double creditDept, int userId, QStr
                              _creditDept(creditDept), _creditTerm(creditTerm)
                              {
     if(creditExpiryDate.isEmpty()){
-        _sumOnBalance = creditDept;
+        this->sumOnBalance() = creditDept;
         time_t now = time(0);
         now += creditTerm;
         char* dt1 = ctime(&now);
@@ -66,7 +66,7 @@ void CreditAccount::putMoney(double amount) {
 }
 
 void CreditAccount::withdrawMoney(int amount) {
-    _sumOnBalance -= amount;
+    sumOnBalance() -= amount;
 }
 
 void CreditAccount::close() {
@@ -78,7 +78,7 @@ void CreditAccount::close() {
 void CreditAccount::openNew(int creditTerm, double creditDept) {
     _creditTerm = creditTerm;
     _creditDept = creditDept;
-    _sumOnBalance = creditDept;
+    sumOnBalance() = creditDept;
 
     time_t now = time(0);
     now += creditTerm;

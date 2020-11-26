@@ -10,7 +10,6 @@ private:
     QString _cvvNumber;
     int _limit;
     bool _isBocked;
-protected:
     double _sumOnBalance;
 public:
     Account();

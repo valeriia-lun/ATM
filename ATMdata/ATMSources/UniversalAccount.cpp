@@ -20,11 +20,11 @@ UniversalAccount& UniversalAccount::operator=(const UniversalAccount& account){
     return *this;
 }
 void UniversalAccount::putMoney(double amount) {
-       _sumOnBalance += amount;
+       sumOnBalance() += amount;
 }
 
 void UniversalAccount::withdrawMoney(int amount){
-    _sumOnBalance -= amount;
+    sumOnBalance() -= amount;
 }
 
 

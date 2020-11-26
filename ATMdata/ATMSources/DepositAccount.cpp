@@ -57,7 +57,7 @@ const double& DepositAccount::depositPercentage() const{
 }
 
 void DepositAccount::putMoney(double amount){
-    _sumOnBalance += amount;
+    sumOnBalance() += amount;
 }
 
 double DepositAccount::chargePercentageOfCost(){
