@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- Written by QtCreator 4.13.2, 2020-11-26T20:28:29. -->
+=======
+<!-- Written by QtCreator 4.13.2, 2020-11-26T18:43:55. -->
+>>>>>>> parent of 132609d... fixed putMoneyOnCredit
 =======
 <!-- Written by QtCreator 4.13.2, 2020-11-26T18:43:55. -->
 >>>>>>> parent of 132609d... fixed putMoneyOnCredit
@@ -73,7 +77,11 @@
    <value type="bool" key="AutoTest.UseGlobal">true</value>
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
    <value type="bool" key="ClangCodeModel.UseGlobalConfig">false</value>
+=======
+   <value type="bool" key="ClangCodeModel.UseGlobalConfig">true</value>
+>>>>>>> parent of 132609d... fixed putMoneyOnCredit
 =======
    <value type="bool" key="ClangCodeModel.UseGlobalConfig">true</value>
 >>>>>>> parent of 132609d... fixed putMoneyOnCredit
