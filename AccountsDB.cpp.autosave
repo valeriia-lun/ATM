@@ -156,23 +156,28 @@ void closeCredit(QString card){
 }
 
 void putMoneyOnCreditAccount(int amount, CreditAccount& ca){
-    QString card = ca.cardNumber();
-    double sum = ca.creditDept() - amount;
-    ca.putMoney(amount);
-    //DB
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
-    if(sum<0) {
-        q.exec("UPDATE CREDIT_ACCOUNT set sum_on_balance ="+ QString::number(ca.sumOnBalance()+amount) + " where account_number =" + card);
-        q.exec("UPDATE CREDIT_ACCOUNT set credit_debt =0 where account_number =" + card);
-
-    }
-        else q.exec("UPDATE CREDIT_ACCOUNT set credit_debt ="+ QString::number(sum) + " where account_number =" + card);
+    
+    QString card = ca.cardNumber();
+    ca.putMoney(amount);
+    if(ca.creditDept() == 0){
+        q.exec("UPDATE CREDIT_ACCOUNT set sum_on_balance ="+ QString::number(ca.sumOnBalance()+amount) + " where account_number =" + card);        
+    }else{
+        double sum = ca.creditDept() - amount;
+        if(sum <= 0){
+            closeCredit(card);
+            if(sum < 0){
+                        q.exec("UPDATE CREDIT_ACCOUNT set sum_on_balance ="+ QString::number(ca.sumOnBalance() - sum) + " where account_number =" + card);
+                    }
+        } else{
+            q.exec("UPDATE CREDIT_ACCOUNT set credit_debt ="+ QString::number(sum) + " where account_number =" + card);   
+        }             
+    }      
 }
 
 void putMoneyOnUniversalAccount(int amount, UniversalAccount& ua){

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 4.13.2, 2020-11-26T21:12:59. -->
+=======
+<<<<<<< HEAD
+<!-- Written by QtCreator 4.13.2, 2020-11-26T20:26:28. -->
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<!-- Written by QtCreator 4.13.2, 2020-11-26T20:28:29. -->
+=======
+<!-- Written by QtCreator 4.13.2, 2020-11-26T18:43:55. -->
+>>>>>>> parent of 132609d... fixed putMoneyOnCredit
+=======
+<!-- Written by QtCreator 4.13.2, 2020-11-26T18:43:55. -->
+>>>>>>> parent of 132609d... fixed putMoneyOnCredit
+>>>>>>> ccce842959c6a9039a08e9cbd78045e03d29e93f
+>>>>>>> parent of 050d753... fixed Account Service
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -68,7 +84,15 @@
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey"/>
+<<<<<<< HEAD
+<<<<<<< HEAD
+   <value type="bool" key="ClangCodeModel.UseGlobalConfig">false</value>
+=======
    <value type="bool" key="ClangCodeModel.UseGlobalConfig">true</value>
+>>>>>>> parent of 132609d... fixed putMoneyOnCredit
+=======
+   <value type="bool" key="ClangCodeModel.UseGlobalConfig">true</value>
+>>>>>>> parent of 132609d... fixed putMoneyOnCredit
    <value type="QString" key="ClangCodeModel.WarningConfigId">Builtin.Questionable</value>
    <valuemap type="QVariantMap" key="ClangTools">
     <value type="bool" key="ClangTools.BuildBeforeAnalysis">true</value>
