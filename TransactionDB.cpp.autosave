@@ -16,7 +16,7 @@ void createTransaction(int transactionSum, QString cardSourceNumber, QString car
          db.close();
 }
 void makeTransactionFromCreditToAnother(CreditAccount& ca, QString cardDest, int amount){
-    createTransaction(amount,ca.cardNumber(),cardDest);
+   createTransaction(amount,ca.cardNumber(),cardDest);
    withdrawMoneyFromCreditAccount(amount,ca);
    if(ourBankAccount){
        putMoneyOnAccountByCard(amount, cardDest);
@@ -50,6 +50,7 @@ void makeTransactionFromCreditToUniversal(CreditAccount& ca, UniversalAccount& u
 //    withdrawMoneyFromUniversalAccount(amount,ua);
 //   putMoneyOnUniversalAccount(amount,ua2);
 //}
+
 void makeTransactionFromCreditToDeposit(CreditAccount& ca, DepositAccount& da, int amount){
     createTransaction(amount,ca.cardNumber(),da.cardNumber());
     withdrawMoneyFromCreditAccount(amount,ca);
