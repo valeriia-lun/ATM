@@ -85,7 +85,7 @@ void PutMoneyToAnotherAccount::on_digit_OK_clicked()
             reply = QMessageBox::question(this, "Question", "Do you want to transfer\n to card of another bank?",
                                           QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
-         _sessionManager.putMoneyToAnotherBank(s.toInt(),card);
+         _sessionManager.putMoneyToAnother(s.toInt(),card);
          if(_sessionManager.limitFailure()){
               ui->amount->setText("");
              QMessageBox::warning(this, QObject::tr("Error"),

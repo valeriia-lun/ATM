@@ -400,7 +400,3 @@ void SessionManager::putMoneyToAnother(int sumOut,QString card){
         _balanceFailure=true;
     }
 }
-
-
-
-
