@@ -24,6 +24,6 @@ public:
 
     void putMoney(double amount) override;
     double chargePercentageOfCost();
-    void close();// + транзекшн с этого на юниверсал!!!!!!!!!!!
+    void close();
     void openNew(int depositTerm, int depositPercentage);
 };
