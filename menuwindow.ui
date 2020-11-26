@@ -78,7 +78,7 @@
        </font>
       </property>
       <property name="text">
-       <string>CashWithdrawal</string>
+       <string>Withdraw Money</string>
       </property>
      </widget>
     </item>
