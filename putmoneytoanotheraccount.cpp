@@ -120,7 +120,7 @@ void PutMoneyToAnotherAccount::on_digit_OK_clicked()
                  ui->card_number->setText("");
             }
         }
-    } else if(ui->amount->text().isEmpty()){
+    } else if(ui->amount->text().isEmpty() ){
         _n=1;
         QMessageBox::warning(this, QObject::tr("Error"),
                                    QObject::tr("Enter amount to transfer!\n"),QMessageBox::Ok);
