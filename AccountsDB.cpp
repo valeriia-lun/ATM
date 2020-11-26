@@ -1,3 +1,4 @@
+@@ -0,0 +1,580 @@
 #include "AccountsDB.h"
 void createUniversalAccount(int userIdATM, QString cardNumber, QString pin, QString cvv, double sumOnBalance,
                                         int limit, QString expiryDate,  bool isBlocked){
@@ -143,18 +144,6 @@ void withdrawMoneyFromCreditAccount(int amount, CreditAccount& ca){
     db.close();
 }
 
-void closeCredit(QString card){
-    DBPath path;
-    QSqlDatabase db;
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(path.getPath());
-    db.open();
-    QSqlQuery q;
-    q.exec("UPDATE CREDIT_ACCOUNT set credit_term = 0 where account_number = " + card);
-    q.exec("UPDATE CREDIT_ACCOUNT set credit_debt = 0 where account_number = " + card);
-    q.exec("UPDATE CREDIT_ACCOUNT set credit_expiry_date = '' where account_number = " + card);
-}
-
 void putMoneyOnCreditAccount(int amount, CreditAccount& ca){
     DBPath path;
     QSqlDatabase db;
@@ -180,6 +169,17 @@ void putMoneyOnCreditAccount(int amount, CreditAccount& ca){
     }
 }
 
+void closeCredit(QString card){
+    DBPath path;
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(path.getPath());
+    db.open();
+    QSqlQuery q;
+    q.exec("UPDATE CREDIT_ACCOUNT set credit_term = 0 where account_number = " + card);
+    q.exec("UPDATE CREDIT_ACCOUNT set credit_debt = 0 where account_number = " + card);
+    q.exec("UPDATE CREDIT_ACCOUNT set credit_expiry_date = '' where account_number = " + card);
+}
 void putMoneyOnUniversalAccount(int amount, UniversalAccount& ua){
        QString card = ua.cardNumber();
        double sum = ua.sumOnBalance() + amount;

@@ -74,7 +74,7 @@ void CreditAccount::putMoney(double amount) {
         }else{
             _creditDept -= amount;
         }
-    }
+    }    
 }
 
 
