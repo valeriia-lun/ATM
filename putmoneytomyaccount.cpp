@@ -178,7 +178,8 @@ void PutMoneyToMyAccount::on_digit_OK_clicked()
         if(!getDepositAccountByUserId(_sessionManager.getCreditAccount().userId()).cardNumber().isNull()){
 _da=getDepositAccountByUserId(_sessionManager.getCreditAccount().userId());
               ui->deposit->setEnabled(true);
-    } else if(!getUniversalAccountByUserId(_sessionManager.getCreditAccount().userId()).cardNumber().isNull()){
+    }
+        if(!getUniversalAccountByUserId(_sessionManager.getCreditAccount().userId()).cardNumber().isNull()){
             _ua=getUniversalAccountByUserId(_sessionManager.getCreditAccount().userId());
              ui->universal->setEnabled(true);
         }else{
@@ -190,7 +191,8 @@ _da=getDepositAccountByUserId(_sessionManager.getCreditAccount().userId());
         if(!getCreditAccountByUserId(_sessionManager.getUniversalAccount().userId()).cardNumber().isNull()){
               ui->credit->setEnabled(true);
               _ca=getCreditAccountByUserId(_sessionManager.getUniversalAccount().userId());
-    } else if(!getDepositAccountByUserId(_sessionManager.getUniversalAccount().userId()).cardNumber().isNull()){
+    }
+        if(!getDepositAccountByUserId(_sessionManager.getUniversalAccount().userId()).cardNumber().isNull()){
              ui->deposit->setEnabled(true);
              _da=getDepositAccountByUserId(_sessionManager.getUniversalAccount().userId());
         }else{
