@@ -2,33 +2,31 @@
 
 User selectUserById(int idd){
     QString sql("SELECT * FROM USER where id_user =" + QString::number(idd));
-    QString firstName, lastName, middleName;
-        int id;
+    QString firstName(""), lastName(""), middleName("");
+        int id(0);
         DBPath p;
         QSqlDatabase db;
         db = QSqlDatabase::addDatabase("QSQLITE");
         db.setDatabaseName(p.getPath());
         db.open();
         QSqlQuery q;
+        if(q.exec(sql)){
+            while (q.next()){
 
-        q.exec(sql);
-        bool exists = false;
+                    id=q.value(0).toInt();
+                    firstName = q.value(1).toString();
+                    lastName = q.value(2).toString();
+                    middleName=q.value(3).toString();
+                return User (id, firstName, lastName, middleName);
+                }
+            QMessageBox::warning(NULL, QObject::tr("Error"),
+                                       QObject::tr("User not found\n"),QMessageBox::Cancel);
 
-        while (q.next()){
-                exists=true;
-                id=q.value(0).toInt();
-                firstName = q.value(1).toString();
-                lastName = q.value(2).toString();
-                middleName=q.value(3).toString();
+        }
 
-            }
-            if ( !exists )
-               {
-                QMessageBox::warning(NULL, QObject::tr("Error"),
-                                           QObject::tr("User not found\n"),QMessageBox::Cancel);}
+             qWarning("Sql Error");
 
-    return User (id, firstName, lastName, middleName);
-
+   return User (id, firstName, lastName, middleName);
 }
 
 User selectUserByCard(QString card){
@@ -55,9 +53,11 @@ User selectUserByCard(QString card){
                     middleName=q.value(3).toString();
                         return User (id, firstName, lastName, middleName);
                 }
+            QMessageBox::warning(NULL, QObject::tr("Error"),
+                                                      QObject::tr("User not found\n"),QMessageBox::Cancel);
+
         }
- QMessageBox::warning(NULL, QObject::tr("Error"),
-                                           QObject::tr("User not found\n"),QMessageBox::Cancel);
+        qWarning("Sql Error");
 
     return User (id, firstName, lastName, middleName);
 }
@@ -65,7 +65,6 @@ User selectUserByCard(QString card){
 //NEEDS TEST
 void deleteUsers(int iduser){
     QString sql("DELETE FROM USER WHERE id_user = " + QString::number(iduser));
-
     DBPath p;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
