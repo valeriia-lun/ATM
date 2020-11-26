@@ -24,7 +24,6 @@
                                         QString depositExpiryDate);
 
     void setNewLimit(QString card, int amount);
-    void closeCredit(QString card);
 
     void blockCard(QString card);
     void unblockCard(QString card);

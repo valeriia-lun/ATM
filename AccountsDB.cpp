@@ -1,4 +1,4 @@
-@@ -0,0 +1,580 @@
+@@ -0,0 +1,581 @@
 #include "AccountsDB.h"
 void createUniversalAccount(int userIdATM, QString cardNumber, QString pin, QString cvv, double sumOnBalance,
                                         int limit, QString expiryDate,  bool isBlocked){
@@ -144,64 +144,43 @@ void withdrawMoneyFromCreditAccount(int amount, CreditAccount& ca){
     db.close();
 }
 
-void putMoneyOnCreditAccount(int amount, CreditAccount& ca){
-    QString card = ca.cardNumber();
-    double sum = ca.creditDept() - amount;
-    ca.putMoney(amount);
-    //DB
-    DBPath path;
-    QSqlDatabase db;
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(path.getPath());
-    db.open();
-    QSqlQuery q;
-    //
-    if(sum<0) {
-        q.exec("UPDATE CREDIT_ACCOUNT set sum_on_balance ="+ QString::number(ca.sumOnBalance()+amount) + " where account_number =" + card);
-        q.exec("UPDATE CREDIT_ACCOUNT set credit_debt =0 where account_number =" + card);
-
-    }
-        else q.exec("UPDATE CREDIT_ACCOUNT set credit_debt ="+ QString::number(sum) + " where account_number =" + card);
-}
-
-<<<<<<< HEAD
 void closeCredit(QString card){
-=======
-void putMoneyOnCreditAccount(int amount, CreditAccount& ca){
-    QString card = ca.cardNumber();
-    double sum = ca.creditDept() - amount;
-    ca.putMoney(amount);
-    //DB
-<<<<<<< HEAD
->>>>>>> parent of 0408706... fixed some stuff
-=======
->>>>>>> parent of 0408706... fixed some stuff
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-<<<<<<< HEAD
-<<<<<<< HEAD
     q.exec("UPDATE CREDIT_ACCOUNT set credit_term = 0 where account_number = " + card);
     q.exec("UPDATE CREDIT_ACCOUNT set credit_debt = 0 where account_number = " + card);
     q.exec("UPDATE CREDIT_ACCOUNT set credit_expiry_date = '' where account_number = " + card);
-=======
-=======
->>>>>>> parent of 0408706... fixed some stuff
-    //
-    if(sum<0) {
-        q.exec("UPDATE CREDIT_ACCOUNT set sum_on_balance ="+ QString::number(ca.sumOnBalance()+amount) + " where account_number =" + card);
-        q.exec("UPDATE CREDIT_ACCOUNT set credit_debt =0 where account_number =" + card);
-
-    }
-        else q.exec("UPDATE CREDIT_ACCOUNT set credit_debt ="+ QString::number(sum) + " where account_number =" + card);
-<<<<<<< HEAD
->>>>>>> parent of 0408706... fixed some stuff
-=======
->>>>>>> parent of 0408706... fixed some stuff
 }
+
+void putMoneyOnCreditAccount(int amount, CreditAccount& ca){
+    DBPath path;
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(path.getPath());
+    db.open();
+    QSqlQuery q;
+
+    QString card = ca.cardNumber();
+    ca.putMoney(amount);
+    if(ca.creditDept() == 0){
+        q.exec("UPDATE CREDIT_ACCOUNT set sum_on_balance ="+ QString::number(ca.sumOnBalance()+amount) + " where account_number =" + card);
+    }else{
+        double sum = ca.creditDept() - amount;
+        if(sum <= 0){
+            closeCredit(card);
+            if(sum < 0){
+                        q.exec("UPDATE CREDIT_ACCOUNT set sum_on_balance ="+ QString::number(ca.sumOnBalance() - sum) + " where account_number =" + card);
+                    }
+        } else{
+            q.exec("UPDATE CREDIT_ACCOUNT set credit_debt ="+ QString::number(sum) + " where account_number =" + card);
+        }
+    }
+}
+
 void putMoneyOnUniversalAccount(int amount, UniversalAccount& ua){
        QString card = ua.cardNumber();
        double sum = ua.sumOnBalance() + amount;

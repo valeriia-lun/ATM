@@ -62,34 +62,8 @@ const QString& CreditAccount::creditExpiryDate() const{
 }
 
 void CreditAccount::putMoney(double amount) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    if(_creditDept == 0){
-        sumOnBalance() += amount;
-    }else{
-        double sum = _creditDept - amount;
-        if(sum <= 0){
-            close();
-            if(sum < 0){
-                sumOnBalance() -= sum;
-            }
-        }else{
-            _creditDept -= amount;
-        }
-    }    
-=======
     _creditDept -= amount;
 
->>>>>>> parent of 0408706... fixed some stuff
-=======
-    _creditDept -= amount;
-
->>>>>>> parent of 0408706... fixed some stuff
-=======
-    _creditDept -= amount;
-
->>>>>>> parent of 0408706... fixed some stuff
 }
 
 
