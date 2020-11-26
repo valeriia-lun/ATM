@@ -10,13 +10,13 @@
 
     void createTransaction(int transactionSum, QString cardSourceNumber, QString cardDestinationNumber);
 
-    void makeTransactionFromCreditToAnother(CreditAccount& ca, QString cardDest, int amount);
+    void makeTransactionFromCreditToAnother(CreditAccount& ca, QString cardDest, int amount, bool ourBankAccount);
 
-    void makeTransactionFromUniversalToAnother(UniversalAccount& ua, QString cardDest, int amount);
+    void makeTransactionFromUniversalToAnother(UniversalAccount& ua, QString cardDest, int amount, bool ourBankAccount);
 
     void makeTransactionFromCreditToUniversal(CreditAccount& ca, UniversalAccount& ua, int amount);
-    void makeTransactionFromCreditToCredit(CreditAccount& ca, CreditAccount& ca2, int amount);
-    void makeTransactionFromUniversalToUniversal(UniversalAccount& ua, UniversalAccount& ua2, int amount);
+   // void makeTransactionFromCreditToCredit(CreditAccount& ca, CreditAccount& ca2, int amount);
+   // void makeTransactionFromUniversalToUniversal(UniversalAccount& ua, UniversalAccount& ua2, int amount);
     void makeTransactionFromCreditToDeposit(CreditAccount& ca, DepositAccount& da, int amount);
 
     void makeTransactionFromUniversalToCredit(UniversalAccount& ua, CreditAccount& ca, int amount);

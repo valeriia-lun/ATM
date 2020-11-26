@@ -1,4 +1,5 @@
 #include "SessionManager.h"
+#include "TransactionDB.h"
 #include <QMessageBox>
 
 
@@ -367,91 +368,39 @@ void SessionManager::putMoneyToMyDeposit(int sumOut){
     }
 }
 
+
+
 void SessionManager::putMoneyToAnother(int sumOut,QString card){
     _limitFailure=false;
     _balanceFailure=false;
     if(_isCredit){
         if (sumOut < _ca.sumOnBalance()){
             if(sumOut <_ca.limit()){
-
-         //credit to credit
-if(!getCreditByCard(card).cardNumber().isNull()){
-    CreditAccount _ca2=getCreditByCard(card);
-    makeTransactionFromCreditToCredit(_ca,_ca2,sumOut);
-
-    //credit to universal
-}else if(!getUniversalByCard(card).cardNumber().isNull()){
-   UniversalAccount _ua2=getUniversalByCard(card);
-    makeTransactionFromCreditToUniversal(_ca,_ua2,sumOut);
-
-    //credit to deposit
-} else if(!getDepositByCard(card).cardNumber().isNull()){
-   DepositAccount _da2=getDepositByCard(card);
-     makeTransactionFromCreditToDeposit(_ca,_da2,sumOut);
- }
-            }else{
-          _limitFailure=true;
+                if(cardExists(card)){
+                    makeTransactionFromCreditToAnother(_ca,card,sumOut,true);
+                }else{
+                     makeTransactionFromCreditToAnother(_ca,card,sumOut,false);
+                }
             }
-        }else{
-             _balanceFailure=true;
-        }
+            _limitFailure=true;
 
-
-    }else if(_isUniversal){
-        if (sumOut < _ua.sumOnBalance()){
-            if(sumOut <_ua.limit()){
-
-         //uni to credit
-if(!getCreditByCard(card).cardNumber().isNull()){
-    CreditAccount _ca2=getCreditByCard(card);
-    makeTransactionFromUniversalToCredit(_ua,_ca2,sumOut);
-
-    //uni to universal
-}else if(!getUniversalByCard(card).cardNumber().isNull()){
-   UniversalAccount _ua2=getUniversalByCard(card);
-    makeTransactionFromUniversalToUniversal(_ua,_ua2,sumOut);
-
-    //uni to deposit
-} else if(!getDepositByCard(card).cardNumber().isNull()){
-   DepositAccount _da2=getDepositByCard(card);
-     makeTransactionFromUniversalDeposit(_ua,_da2,sumOut);
- }
-            }else{
-             _limitFailure=true;
-            }
-        }else{
-   _balanceFailure=true;
-        }
-    }
-
-}
-
-void SessionManager::putMoneyToAnotherBank(int sumOut,QString card){
-    _limitFailure=false;
-    _balanceFailure=false;
-    if(_isCredit){
-        if (sumOut < _ca.sumOnBalance()){
-            if(sumOut <_ca.limit()){
-        makeTransactionFromCreditToAnother(_ca, card, sumOut);
-            }else{
-           _limitFailure=true;
-            }
-        }else{
-           _balanceFailure=true;
-        }
-    }else if(_isUniversal){
-        if (sumOut < _ua.sumOnBalance()){
-            if(sumOut <_ua.limit()){
-
-         makeTransactionFromUniversalToAnother(_ua, card, sumOut);
-            }else{
-  _limitFailure=true;
-            }
-        }else{
+           }
         _balanceFailure=true;
+    }if(_isUniversal){
+        if (sumOut < _ua.sumOnBalance()){
+            if(sumOut <_ua.limit()){
+                if(cardExists(card)){
+                    makeTransactionFromUniversalToAnother(_ua,card,sumOut,true);
+                }else{
+                     makeTransactionFromUniversalToAnother(_ua,card,sumOut,false);
+                }
+            }
+            _limitFailure=true;
         }
+        _balanceFailure=true;
     }
-
 }
+
+
 
 
