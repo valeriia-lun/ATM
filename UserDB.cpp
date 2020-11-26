@@ -57,8 +57,9 @@ User selectUserByCard(QString card){
             QMessageBox::warning(NULL, QObject::tr("Error"),
                                                       QObject::tr("User not found\n"),QMessageBox::Cancel);
 
+        }else{
+            qWarning("Sql Error");
         }
-        qWarning("Sql Error");
 
     return User (id, firstName, lastName, middleName);
 }
