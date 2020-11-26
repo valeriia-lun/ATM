@@ -2,6 +2,7 @@
 #include "ui_passwordwindow.h"
 #include <QAction>
 #include <QProcess>
+#include <QtDebug>
 
 PasswordWindow::PasswordWindow(SessionManager sm,QWidget *parent) :
     _sessionManager(sm), QDialog(parent),
@@ -53,6 +54,7 @@ void PasswordWindow::on_digit_OK_clicked()
     if(!_pin.isEmpty()){
     _sessionManager.checkPin(_pin);
     if(_sessionManager.cardPinIsOk()){
+
         if(_sessionManager.isCredit()){
             hide();
           menuwindowcredit = new MenuWindowCredit(_sessionManager,this);

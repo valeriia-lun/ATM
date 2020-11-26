@@ -170,29 +170,32 @@ void SessionManager::checkCard(QString card){
 }
 
  void SessionManager::checkPin(QString pin){
-     if (!getDepositAccountByCardAndPin(_card, pin).cardNumber().isNull()){
+     if (getDepositAccountByCardAndPin(_card, pin).cardNumber() != ""){
             _da=getDepositAccountByCardAndPin(_card, pin);
             _numTry=0;
             _isDeposit=true;
             _isCredit=false;
             _isUniversal=false;
             _cardPinOk=true;
+            qWarning("deposit");
         }
-        else if (!getCreditAccountByCardAndPin(_card, pin).cardNumber().isNull()){
+        else if (getCreditAccountByCardAndPin(_card, pin).cardNumber() != ""){
 _numTry=0;
             _ca=getCreditAccountByCardAndPin(_card, pin);
             _isDeposit=false;
             _isCredit=true;
             _isUniversal=false;
             _cardPinOk=true;
+             qWarning("credit");
         }
-        else if (!getUniversalAccountByCardAndPin(_card, pin).cardNumber().isNull()){
+        else if (getUniversalAccountByCardAndPin(_card, pin).cardNumber() != ""){
          _numTry=0;
             _ua=getUniversalAccountByCardAndPin(_card, pin);
             _isDeposit=false;
             _isCredit=false;
             _isUniversal=true;
             _cardPinOk=true;
+             qWarning("universal");
 
         }else{
          _cardPinOk=false;
