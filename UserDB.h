@@ -8,7 +8,7 @@
 #include <QtSql/QSqlQuery>
 #include "ATMdata/ATMHeaders/User.h"
 #include "DBPath.h"
-    void createUser(int , QString , QString , QString );
+
     User selectUserById(int );
     User selectUserByCard(QString );
     void deleteUsers(int );

@@ -15,89 +15,57 @@ void createTransaction(int transactionSum, QString cardSourceNumber, QString car
                " VALUES('"  + QString::number(transactionSum) + "', '" + transactionDateTime + "', '" + cardSourceNumber + "', '"+ cardDestinationNumber+"')");
          db.close();
 }
-void makeTransactionFromCreditToAnother(CreditAccount& ca, QString cardDest, int amount){
+void makeTransactionFromCreditToAnother(CreditAccount& ca, QString cardDest, int amount,bool ourBankAccount){
     createTransaction(amount,ca.cardNumber(),cardDest);
-    //
-
    withdrawMoneyFromCreditAccount(amount,ca);
-    //
+   if(ourBankAccount){
+       putMoneyOnAccountByCard(amount, cardDest);
+   }
 }
 
-void makeTransactionFromUniversalToAnother(UniversalAccount& ua, QString cardDest, int amount){
+void makeTransactionFromUniversalToAnother(UniversalAccount& ua, QString cardDest, int amount,bool ourBankAccount){
     createTransaction(amount,ua.cardNumber(),cardDest);
-      //
-
-      withdrawMoneyFromUniversalAccount(amount,ua);
-      //
+    withdrawMoneyFromUniversalAccount(amount,ua);
+    if(ourBankAccount){
+        putMoneyOnAccountByCard(amount, cardDest);
+    }
 }
 
 void makeTransactionFromCreditToUniversal(CreditAccount& ca, UniversalAccount& ua, int amount){
     createTransaction(amount,ca.cardNumber(),ua.cardNumber());
-    //
-
     withdrawMoneyFromCreditAccount(amount,ca);
     putMoneyOnUniversalAccount(amount,ua);
-    //
 }
-void makeTransactionFromCreditToCredit(CreditAccount& ca, CreditAccount& ca2, int amount){
-    createTransaction(amount,ca.cardNumber(),ca2.cardNumber());
-    //
+//void makeTransactionFromCreditToCredit(CreditAccount& ca, CreditAccount& ca2, int amount){
+//    createTransaction(amount,ca.cardNumber(),ca2.cardNumber());
+//    //
 
-    withdrawMoneyFromCreditAccount(amount,ca);
-    putMoneyOnCreditAccount(amount,ca2);
-}
-void makeTransactionFromUniversalToUniversal(UniversalAccount& ua, UniversalAccount& ua2, int amount){
-    createTransaction(amount,ua.cardNumber(),ua2.cardNumber());
-    //
+//    withdrawMoneyFromCreditAccount(amount,ca);
+//    putMoneyOnCreditAccount(amount,ca2);
+//}
+//void makeTransactionFromUniversalToUniversal(UniversalAccount& ua, UniversalAccount& ua2, int amount){
+//    createTransaction(amount,ua.cardNumber(),ua2.cardNumber());
+//    //
 
-    withdrawMoneyFromUniversalAccount(amount,ua);
-   putMoneyOnUniversalAccount(amount,ua2);
-}
+//    withdrawMoneyFromUniversalAccount(amount,ua);
+//   putMoneyOnUniversalAccount(amount,ua2);
+//}
 void makeTransactionFromCreditToDeposit(CreditAccount& ca, DepositAccount& da, int amount){
     createTransaction(amount,ca.cardNumber(),da.cardNumber());
-    //
-
     withdrawMoneyFromCreditAccount(amount,ca);
     putMoneyOnDepositAccount(amount,da);
-    //
 }
 
 void makeTransactionFromUniversalToCredit(UniversalAccount& ua, CreditAccount& ca, int amount){
     createTransaction(amount,ua.cardNumber(),ca.cardNumber());
-    //
-
    withdrawMoneyFromUniversalAccount(amount,ua);
    putMoneyOnCreditAccount(amount,ca);
-    //
 }
 
 void makeTransactionFromUniversalDeposit(UniversalAccount& ua, DepositAccount& da, int amount){
     createTransaction(amount,ua.cardNumber(),da.cardNumber());
-    //
-
    withdrawMoneyFromUniversalAccount(amount,ua);
    putMoneyOnDepositAccount(amount,da);
-    //
-}
-
-void getAllTransactions(){
-    DBPath p;
-    QSqlDatabase db;
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(p.getPath());
-    db.open();
-    QSqlQuery q;
-    bool exists = false;
-    QString sql("SELECT * FROM TRANSACTION_ATM");
-     q.exec(sql);
-    while (q.next()){
-            exists=true;
-        }
-    if ( !exists )
-           {
-            QMessageBox::warning(NULL, QObject::tr("Error"),
-                                       QObject::tr("No transactions\n"),QMessageBox::Cancel);}
-
 }
 
 void getAllTransactionsByCard(QString card){
@@ -117,6 +85,5 @@ void getAllTransactionsByCard(QString card){
            {
             QMessageBox::warning(NULL, QObject::tr("Error"),
                                        QObject::tr("No transactions\n"),QMessageBox::Cancel);}
-
 }
 
