@@ -12,9 +12,9 @@
 class SessionManager{
 private:
 
-    UserDB udb;
-    TransactionDB tdb;
-    CasseteDB cdb;
+   // UserDB udb;
+    //TransactionDB tdb;
+   // CasseteDB cdb;
     //cash dispenser
     int _totalCashAmount;
   QMap<int,int> _notesMap;
@@ -86,7 +86,7 @@ public:
     void putMoneyToAnother(int,QString);
     void putMoneyToAnotherBank(int,QString);
     QString getCard(){return _card;}
-    QString getUser(){return (udb.selectUserByCard(_card).firstName()+" "+udb.selectUserByCard(_card).lastName());}
+    QString getUser(){return (selectUserByCard(_card).firstName()+" "+selectUserByCard(_card).lastName());}
     bool balanceFailure(){return _balanceFailure;}
     bool limitFailure(){return _limitFailure;}
     bool banknotesFailure(){return _banknotesFailure;}

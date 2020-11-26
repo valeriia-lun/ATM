@@ -3,8 +3,6 @@
 #include "DBPath.h"
 #include <QVariant>
 
-class CasseteDB{
-public:
     int get50();
     int get100();
     int get200();
@@ -14,7 +12,7 @@ public:
     void change100(int);
     void change200(int);
     void change500(int);
-};
+
 
 
 #endif // DISPENCER_H

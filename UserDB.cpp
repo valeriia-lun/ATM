@@ -1,6 +1,6 @@
 #include "UserDB.h"
 
-User UserDB::selectUserById(int idd){
+User selectUserById(int idd){
     QString sql("SELECT * FROM USER where id_user =" + QString::number(idd));
     QString firstName, lastName, middleName;
         int id;
@@ -28,7 +28,7 @@ User UserDB::selectUserById(int idd){
 
 }
 
-User UserDB::selectUserByCard(QString card){
+User selectUserByCard(QString card){
     QString sql("SELECT * FROM USER WHERE id_user IN (SELECT user_id "
                 "FROM CREDIT_ACCOUNT "
                 "WHERE account_number=" + card+")"
@@ -61,7 +61,7 @@ User UserDB::selectUserByCard(QString card){
 }
 
 //NEEDS TEST
-void UserDB::deleteUsers(int iduser){
+void deleteUsers(int iduser){
     QString sql("DELETE FROM USER WHERE id_user = " + QString::number(iduser));
 
     DBPath p;

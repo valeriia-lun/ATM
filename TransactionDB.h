@@ -7,8 +7,7 @@
 #include "ATMdata/ATMHeaders/accounts/UniversalAccount.h"
 #include <QMessageBox>
 #include "DBPath.h"
-class TransactionDB{
-public:
+
     void createTransaction(int transactionSum, QString cardSourceNumber, QString cardDestinationNumber);
 
     void makeTransactionFromCreditToAnother(CreditAccount& ca, QString cardDest, int amount);
@@ -27,7 +26,7 @@ public:
     void getAllTransactions();
 
     void getAllTransactionsByCard(QString card);
-};
+
 
 
 

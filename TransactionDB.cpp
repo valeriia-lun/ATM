@@ -2,7 +2,7 @@
 #include "TransactionDB.h"
 #include "AccountsDB.h"
 
-void TransactionDB::createTransaction(int transactionSum, QString cardSourceNumber, QString cardDestinationNumber){
+void createTransaction(int transactionSum, QString cardSourceNumber, QString cardDestinationNumber){
     Transaction transaction(transactionSum,cardSourceNumber,cardDestinationNumber,"",0);
      QString transactionDateTime = transaction.transactionDateTime();
         DBPath p;
@@ -15,7 +15,7 @@ void TransactionDB::createTransaction(int transactionSum, QString cardSourceNumb
                " VALUES('"  + QString::number(transactionSum) + "', '" + transactionDateTime + "', '" + cardSourceNumber + "', '"+ cardDestinationNumber+"')");
          db.close();
 }
-void TransactionDB::makeTransactionFromCreditToAnother(CreditAccount& ca, QString cardDest, int amount){
+void makeTransactionFromCreditToAnother(CreditAccount& ca, QString cardDest, int amount){
     createTransaction(amount,ca.cardNumber(),cardDest);
     //
 
@@ -23,7 +23,7 @@ void TransactionDB::makeTransactionFromCreditToAnother(CreditAccount& ca, QStrin
     //
 }
 
-void TransactionDB::makeTransactionFromUniversalToAnother(UniversalAccount& ua, QString cardDest, int amount){
+void makeTransactionFromUniversalToAnother(UniversalAccount& ua, QString cardDest, int amount){
     createTransaction(amount,ua.cardNumber(),cardDest);
       //
 
@@ -31,7 +31,7 @@ void TransactionDB::makeTransactionFromUniversalToAnother(UniversalAccount& ua, 
       //
 }
 
-void TransactionDB::makeTransactionFromCreditToUniversal(CreditAccount& ca, UniversalAccount& ua, int amount){
+void makeTransactionFromCreditToUniversal(CreditAccount& ca, UniversalAccount& ua, int amount){
     createTransaction(amount,ca.cardNumber(),ua.cardNumber());
     //
 
@@ -39,21 +39,21 @@ void TransactionDB::makeTransactionFromCreditToUniversal(CreditAccount& ca, Univ
     putMoneyOnUniversalAccount(amount,ua);
     //
 }
-void TransactionDB::makeTransactionFromCreditToCredit(CreditAccount& ca, CreditAccount& ca2, int amount){
+void makeTransactionFromCreditToCredit(CreditAccount& ca, CreditAccount& ca2, int amount){
     createTransaction(amount,ca.cardNumber(),ca2.cardNumber());
     //
 
     withdrawMoneyFromCreditAccount(amount,ca);
     putMoneyOnCreditAccount(amount,ca2);
 }
-void TransactionDB::makeTransactionFromUniversalToUniversal(UniversalAccount& ua, UniversalAccount& ua2, int amount){
+void makeTransactionFromUniversalToUniversal(UniversalAccount& ua, UniversalAccount& ua2, int amount){
     createTransaction(amount,ua.cardNumber(),ua2.cardNumber());
     //
 
     withdrawMoneyFromUniversalAccount(amount,ua);
    putMoneyOnUniversalAccount(amount,ua2);
 }
-void TransactionDB::makeTransactionFromCreditToDeposit(CreditAccount& ca, DepositAccount& da, int amount){
+void makeTransactionFromCreditToDeposit(CreditAccount& ca, DepositAccount& da, int amount){
     createTransaction(amount,ca.cardNumber(),da.cardNumber());
     //
 
@@ -62,7 +62,7 @@ void TransactionDB::makeTransactionFromCreditToDeposit(CreditAccount& ca, Deposi
     //
 }
 
-void TransactionDB::makeTransactionFromUniversalToCredit(UniversalAccount& ua, CreditAccount& ca, int amount){
+void makeTransactionFromUniversalToCredit(UniversalAccount& ua, CreditAccount& ca, int amount){
     createTransaction(amount,ua.cardNumber(),ca.cardNumber());
     //
 
@@ -71,7 +71,7 @@ void TransactionDB::makeTransactionFromUniversalToCredit(UniversalAccount& ua, C
     //
 }
 
-void TransactionDB::makeTransactionFromUniversalDeposit(UniversalAccount& ua, DepositAccount& da, int amount){
+void makeTransactionFromUniversalDeposit(UniversalAccount& ua, DepositAccount& da, int amount){
     createTransaction(amount,ua.cardNumber(),da.cardNumber());
     //
 
@@ -80,7 +80,7 @@ void TransactionDB::makeTransactionFromUniversalDeposit(UniversalAccount& ua, De
     //
 }
 
-void TransactionDB::getAllTransactions(){
+void getAllTransactions(){
     DBPath p;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -100,7 +100,7 @@ void TransactionDB::getAllTransactions(){
 
 }
 
-void TransactionDB::getAllTransactionsByCard(QString card){
+void getAllTransactionsByCard(QString card){
        DBPath p;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");

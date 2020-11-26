@@ -36,10 +36,10 @@ void SessionManager::incashMoney(int n){
 
 
 void SessionManager::initialiseNotes(){
-  _notesMap[50] = cdb.get50();
-   _notesMap[100] = cdb.get100();
-   _notesMap[200] = cdb.get200();
-   _notesMap[500] = cdb.get500();
+  _notesMap[50] = get50();
+   _notesMap[100] = get100();
+   _notesMap[200] = get200();
+   _notesMap[500] = get500();
     setTotalCashAmount();
 }
 void SessionManager::setTotalCashAmount(){
@@ -138,10 +138,10 @@ void SessionManager::calculateNotesOut(int m){
     }
 }
 void SessionManager::updateNotesMap(QMap<int, int> m){
-    cdb.change50(_notesMap[50]-m[50]);
-    cdb.change100(_notesMap[100]-m[100]);
-    cdb.change200(_notesMap[200]-m[200]);
-    cdb.change500(_notesMap[500]-m[500]);
+    change50(_notesMap[50]-m[50]);
+    change100(_notesMap[100]-m[100]);
+    change200(_notesMap[200]-m[200]);
+    change500(_notesMap[500]-m[500]);
 
     initialiseNotes();
 
@@ -306,7 +306,7 @@ void SessionManager::putMoneyToMyCredit(int sumOut,CreditAccount a){
     if(_isUniversal){
         if (sumOut < _ua.sumOnBalance()){
             if(sumOut <_ua.limit()){
-               tdb.makeTransactionFromUniversalToCredit(_ua,a,sumOut);
+               makeTransactionFromUniversalToCredit(_ua,a,sumOut);
             }else{
            _limitFailure=true;
             }
@@ -324,7 +324,7 @@ void SessionManager::putMoneyToMyUniversal(int sumOut,UniversalAccount a){
     if(_isCredit){
         if (sumOut < _ca.sumOnBalance()){
             if(sumOut <_ca.limit()){
-                tdb.makeTransactionFromCreditToUniversal(_ca,a,sumOut);
+                makeTransactionFromCreditToUniversal(_ca,a,sumOut);
             }else{
              _limitFailure=true;
             }
@@ -342,7 +342,7 @@ void SessionManager::putMoneyToMyDeposit(int sumOut,DepositAccount a){
     if(_isCredit){
         if (sumOut < _ca.sumOnBalance()){
             if(sumOut <_ca.limit()){
-                tdb.makeTransactionFromCreditToDeposit(_ca,a,sumOut);
+                makeTransactionFromCreditToDeposit(_ca,a,sumOut);
             }else{
            _limitFailure=true;
             }
@@ -353,7 +353,7 @@ void SessionManager::putMoneyToMyDeposit(int sumOut,DepositAccount a){
     } else if(_isUniversal){
         if (sumOut < _ua.sumOnBalance()){
             if(sumOut <_ua.limit()){
-                tdb.makeTransactionFromUniversalDeposit(_ua,a,sumOut);
+                makeTransactionFromUniversalDeposit(_ua,a,sumOut);
             }else{
                   _limitFailure=true;
             }
@@ -376,17 +376,17 @@ void SessionManager::putMoneyToAnother(int sumOut,QString card){
          //credit to credit
 if(!getCreditByCard(card).cardNumber().isNull()){
     CreditAccount _ca2=getCreditByCard(card);
-    tdb.makeTransactionFromCreditToCredit(_ca,_ca2,sumOut);
+    makeTransactionFromCreditToCredit(_ca,_ca2,sumOut);
 
     //credit to universal
 }else if(!getUniversalByCard(card).cardNumber().isNull()){
    UniversalAccount _ua2=getUniversalByCard(card);
-    tdb.makeTransactionFromCreditToUniversal(_ca,_ua2,sumOut);
+    makeTransactionFromCreditToUniversal(_ca,_ua2,sumOut);
 
     //credit to deposit
 } else if(!getDepositByCard(card).cardNumber().isNull()){
    DepositAccount _da2=getDepositByCard(card);
-     tdb.makeTransactionFromCreditToDeposit(_ca,_da2,sumOut);
+     makeTransactionFromCreditToDeposit(_ca,_da2,sumOut);
  }
             }else{
           _limitFailure=true;
@@ -403,17 +403,17 @@ if(!getCreditByCard(card).cardNumber().isNull()){
          //uni to credit
 if(!getCreditByCard(card).cardNumber().isNull()){
     CreditAccount _ca2=getCreditByCard(card);
-    tdb.makeTransactionFromUniversalToCredit(_ua,_ca2,sumOut);
+    makeTransactionFromUniversalToCredit(_ua,_ca2,sumOut);
 
     //uni to universal
 }else if(!getUniversalByCard(card).cardNumber().isNull()){
    UniversalAccount _ua2=getUniversalByCard(card);
-    tdb.makeTransactionFromUniversalToUniversal(_ua,_ua2,sumOut);
+    makeTransactionFromUniversalToUniversal(_ua,_ua2,sumOut);
 
     //uni to deposit
 } else if(!getDepositByCard(card).cardNumber().isNull()){
    DepositAccount _da2=getDepositByCard(card);
-     tdb.makeTransactionFromUniversalDeposit(_ua,_da2,sumOut);
+     makeTransactionFromUniversalDeposit(_ua,_da2,sumOut);
  }
             }else{
              _limitFailure=true;
@@ -431,7 +431,7 @@ void SessionManager::putMoneyToAnotherBank(int sumOut,QString card){
     if(_isCredit){
         if (sumOut < _ca.sumOnBalance()){
             if(sumOut <_ca.limit()){
-        tdb.makeTransactionFromCreditToAnother(_ca, card, sumOut);
+        makeTransactionFromCreditToAnother(_ca, card, sumOut);
             }else{
            _limitFailure=true;
             }
@@ -442,7 +442,7 @@ void SessionManager::putMoneyToAnotherBank(int sumOut,QString card){
         if (sumOut < _ua.sumOnBalance()){
             if(sumOut <_ua.limit()){
 
-         tdb.makeTransactionFromUniversalToAnother(_ua, card, sumOut);
+         makeTransactionFromUniversalToAnother(_ua, card, sumOut);
             }else{
   _limitFailure=true;
             }

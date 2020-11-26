@@ -2,7 +2,7 @@
 
 
 
-int CasseteDB::get50(){
+int get50(){
     int amount;
     //DB
     DBPath path;
@@ -22,7 +22,7 @@ int CasseteDB::get50(){
     return amount;
 }
 
-int CasseteDB::get100(){
+int get100(){
     int amount;
     //DB
     DBPath path;
@@ -41,7 +41,7 @@ int CasseteDB::get100(){
 
     return amount;
 }
-int CasseteDB::get200(){
+int get200(){
     int amount;
     //DB
     DBPath path;
@@ -60,7 +60,7 @@ int CasseteDB::get200(){
 
     return amount;
 }
-int CasseteDB::get500(){
+int get500(){
     int amount;
     //DB
     DBPath path;
@@ -80,7 +80,7 @@ int CasseteDB::get500(){
     return amount;
 }
 
-void CasseteDB::change50(int n){
+void change50(int n){
     //DB
     DBPath path;
     QSqlDatabase db;
@@ -92,7 +92,7 @@ void CasseteDB::change50(int n){
     QString sql("UPDATE BANKNOTES set _50 = "+QString::number(n));
     q.exec(sql);
 }
-void CasseteDB::change100(int n){
+void change100(int n){
     //DB
     DBPath path;
     QSqlDatabase db;
@@ -104,7 +104,7 @@ void CasseteDB::change100(int n){
     QString sql("UPDATE BANKNOTES set _100 = "+QString::number(n));
     q.exec(sql);
 }
-void CasseteDB::change200(int n){
+void change200(int n){
     //DB
     DBPath path;
     QSqlDatabase db;
@@ -116,7 +116,7 @@ void CasseteDB::change200(int n){
     QString sql("UPDATE BANKNOTES set _200 = "+QString::number(n));
     q.exec(sql);
 }
-void CasseteDB::change500(int n){
+void change500(int n){
     //DB
     DBPath path;
     QSqlDatabase db;

@@ -8,10 +8,9 @@
 #include <QtSql/QSqlQuery>
 #include "ATMdata/ATMHeaders/User.h"
 #include "DBPath.h"
-class UserDB{
-public:
+
     User selectUserById(int );
     User selectUserByCard(QString );
     void deleteUsers(int );
-};
+
 #endif // USERDB_H
