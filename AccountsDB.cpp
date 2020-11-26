@@ -225,11 +225,11 @@ CreditAccount getCreditAccountByUserId(int id){
     QSqlQuery q;
     //
    // q.exec(strSql);
-   // bool exists = false;
+    bool exists = false;
         bool isBl;
         if(q.exec(strSql)){
         while (q.next()){
-          //  exists=true;
+            exists=true;
             accountNumber=q.value(0).toString();
             pin = q.value(1).toString();
             expiryDate = q.value(2).toString();
@@ -242,6 +242,9 @@ CreditAccount getCreditAccountByUserId(int id){
             limit=q.value(9).toInt();
             isBlocked=q.value(10).toInt();
             isBl = isBlocked == 1 ? true : false;
+
+        }
+        if(exists){
             return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate, creditExpDate);
 
         }
@@ -314,8 +317,10 @@ DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn){
         bool exists = false;
             bool isBl;
       //  q.exec(strSql);
+            qWarning("d1");
  if(q.exec(strSql)){
     while (q.next()){
+        qWarning("d0");
         exists=true;
         accountNumber=q.value(0).toString();
         pin = q.value(1).toString();
@@ -329,14 +334,17 @@ DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn){
         isBlocked=q.value(9).toInt();
         limit=q.value(10).toInt();
         isBl = isBlocked == 1 ? true : false;
+        return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
 
     }
     if(exists){
+        qWarning("d2");
+
         return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
 
     }else{
-        QMessageBox::warning(NULL, QObject::tr("Error"),
-                                QObject::tr("Account not found\n"),QMessageBox::Cancel);
+        qWarning("d3");
+
 
     }
 
@@ -363,6 +371,8 @@ UniversalAccount getUniversalAccountByCardAndPin(QString card, QString pinn){
         //
         //q.exec(strSql);
         bool exists = false;
+        qWarning("u1");
+
  if(q.exec(strSql)){
     while (q.next()){
         exists=true;
@@ -378,13 +388,11 @@ UniversalAccount getUniversalAccountByCardAndPin(QString card, QString pinn){
 
     }
     if(exists){
-        qWarning("u1");
+        qWarning("u2");
         return UniversalAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,expiryDate);
-    qWarning("u2");
+
     }else{
-        QMessageBox::warning(NULL, QObject::tr("Error"),
-                                QObject::tr("Account not found\n"),QMessageBox::Cancel);
-    }
+        }
 
 }else{
 qWarning("Sql Error");
@@ -407,6 +415,7 @@ CreditAccount getCreditAccountByCardAndPin(QString card, QString pinn){
    // q.exec(strSql);
     bool exists = false;
         bool isBl;
+        qWarning("c1");
  if(q.exec(strSql)){
         while (q.next()){
             exists=true;
@@ -425,11 +434,13 @@ CreditAccount getCreditAccountByCardAndPin(QString card, QString pinn){
 
         }
         if(exists){
+            qWarning("c2");
             return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate, creditExpDate);
 
+        }else{
+
         }
-        QMessageBox::warning(NULL, QObject::tr("Error"),
-                                QObject::tr("Account not found\n"),QMessageBox::Cancel);
+
 
     }else{
     qWarning("Sql Error");
@@ -568,9 +579,11 @@ UniversalAccount getUniversalAccountByUserId(int id){
         if(exists){
             return UniversalAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,expiryDate);
 
+        }else{
+            QMessageBox::warning(NULL, QObject::tr("Error"),
+                                    QObject::tr("Account not found\n"),QMessageBox::Cancel);
+
         }
-        QMessageBox::warning(NULL, QObject::tr("Error"),
-                                QObject::tr("Account not found\n"),QMessageBox::Cancel);
 
     }else{
     qWarning("Sql Error");

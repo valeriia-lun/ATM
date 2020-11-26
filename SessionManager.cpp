@@ -239,8 +239,8 @@ _balanceFailure=false;
         QMessageBox::warning(NULL, QObject::tr("Error"),
                                    QObject::tr("You can not withdraw money from Deposit Account!\n"),QMessageBox::Ok);
     }else if(_isCredit){
-        if (sumOut < _ca.sumOnBalance()){
-            if(sumOut <_ca.limit()){
+        if (sumOut <= _ca.sumOnBalance()){
+            if(sumOut <=_ca.limit()){
                 calculateNotesOut(sumOut);
                 if(isSuccess()){
                     withdrawMoneyFromCreditAccount(sumOut, _ca);
@@ -252,8 +252,8 @@ _balanceFailure=false;
          _balanceFailure=true;
         }
     }else {
-        if (sumOut < _ua.sumOnBalance()){
-            if(sumOut <_ua.limit()){
+        if (sumOut <= _ua.sumOnBalance()){
+            if(sumOut <=_ua.limit()){
                 calculateNotesOut(sumOut);
                 if(isSuccess()){
                    withdrawMoneyFromUniversalAccount(sumOut, _ua);
