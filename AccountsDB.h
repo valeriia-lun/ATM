@@ -37,6 +37,7 @@
     void putMoneyOnUniversalAccount(int amount, UniversalAccount& ua);
 
     void putMoneyOnDepositAccount(int amount, DepositAccount& da);
+    void closeCredit(QString card);
 
     CreditAccount getCreditAccountByUserId(int id);
 
