@@ -319,7 +319,7 @@ DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn){
  if(q.exec(strSql)){
     while (q.next()){
         qWarning("d0");
-        exists=true;
+        //exists=true;
         accountNumber=q.value(0).toString();
         pin = q.value(1).toString();
         expiryDate = q.value(2).toString();
@@ -335,14 +335,10 @@ DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn){
         return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
 
     }
-    if(exists){
+
         qWarning("d2");
 
         return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
-
-    }else{
-        qWarning("d3");
-
 
 
 }else{
@@ -431,13 +427,8 @@ CreditAccount getCreditAccountByCardAndPin(QString card, QString pinn){
             isBl = isBlocked == 1 ? true : false;
  return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate, creditExpDate);
         }
-        if(exists){
-            qWarning("c2");
             return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate, creditExpDate);
 
-        }else{
-
-        }
 
 
     }else{
@@ -478,11 +469,7 @@ UniversalAccount getUniversalAccountByUserId(int id){
              return UniversalAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,expiryDate);
         }
 
-        }else{
-            QMessageBox::warning(NULL, QObject::tr("Error"),
-                                    QObject::tr("Account not found\n"),QMessageBox::Cancel);
 
-        }
 
     }else{
     qWarning("Sql Error");
