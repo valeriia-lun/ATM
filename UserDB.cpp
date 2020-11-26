@@ -10,14 +10,17 @@ User selectUserById(int idd){
         db.setDatabaseName(p.getPath());
         db.open();
         QSqlQuery q;
+
         q.exec(sql);
         bool exists = false;
+
         while (q.next()){
                 exists=true;
                 id=q.value(0).toInt();
                 firstName = q.value(1).toString();
                 lastName = q.value(2).toString();
                 middleName=q.value(3).toString();
+
             }
             if ( !exists )
                {
@@ -34,8 +37,8 @@ User selectUserByCard(QString card){
                 "WHERE account_number=" + card+")"
    " OR id_user IN (SELECT user_id FROM DEPOSIT_ACCOUNT "
                      "WHERE account_number="+card+") OR id_user IN (SELECT user_id FROM UNIVERSAL_ACCOUNT WHERE account_number="+card+")");
-    QString firstName, lastName, middleName;
-        int id;
+    QString firstName(""), lastName(""), middleName("");
+        int id(0);
 
         DBPath p;
         QSqlDatabase db;
@@ -43,19 +46,18 @@ User selectUserByCard(QString card){
         db.setDatabaseName(p.getPath());
         db.open();
         QSqlQuery q;
-        q.exec(sql);
-        bool exists = false;
-        while (q.next()){
-                exists=true;
-                id=q.value(0).toInt();
-                firstName = q.value(1).toString();
-                lastName = q.value(2).toString();
-                middleName=q.value(3).toString();
-            }
-            if ( !exists )
-               {
-                QMessageBox::warning(NULL, QObject::tr("Error"),
-                                           QObject::tr("User not found\n"),QMessageBox::Cancel);}
+
+        if(q.exec(sql)){
+            while (q.next()){
+                    id=q.value(0).toInt();
+                    firstName = q.value(1).toString();
+                    lastName = q.value(2).toString();
+                    middleName=q.value(3).toString();
+                        return User (id, firstName, lastName, middleName);
+                }
+        }
+ QMessageBox::warning(NULL, QObject::tr("Error"),
+                                           QObject::tr("User not found\n"),QMessageBox::Cancel);
 
     return User (id, firstName, lastName, middleName);
 }
