@@ -253,7 +253,7 @@ CreditAccount getCreditAccountByUserId(int id){
 
 DepositAccount getDepositAccountByUserId(int id){
     QString strSql = "SELECT * FROM DEPOSIT_ACCOUNT where user_id ="+ QString::number(id);
-    QString accountNumber, pin, expiryDate, cvvNumber, depositExpDate;
+    QString accountNumber(""), pin(""), expiryDate(""), cvvNumber(""), depositExpDate("");
     int userIdATM(0), sum(0), depositTerm(0),limit(0), isBlocked(0);
     double depositPerc(0.0);
     //DB
@@ -266,8 +266,8 @@ DepositAccount getDepositAccountByUserId(int id){
     //
    // bool exists = false;
         bool isBl;
-    q.exec(strSql);
-
+    //q.exec(strSql);
+if(q.exec(strSql)){
 while (q.next()){
    // exists=true;
     accountNumber=q.value(0).toString();
@@ -282,15 +282,20 @@ while (q.next()){
     isBlocked=q.value(9).toInt();
     limit=q.value(10).toInt();
     isBl = isBlocked == 1 ? true : false;
-
+}
+} else{
+    QMessageBox::warning(NULL, QObject::tr("Error"),
+                               QObject::tr("Account not found\n"),QMessageBox::Cancel);
+     qWarning("Sql Error");
 }
 
 return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
 
 }
+
 DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn){
         QString strSql = "SELECT * FROM DEPOSIT_ACCOUNT where account_number =" + card + " AND pin =" + pinn;
-        QString accountNumber, pin, expiryDate, cvvNumber, depositExpDate;
+        QString accountNumber(""), pin(""), expiryDate(""), cvvNumber(""), depositExpDate("");
         int userIdATM(0), sum(0), depositTerm(0),limit(0), isBlocked(0);
         double depositPerc(0.0);
         //DB
@@ -303,8 +308,8 @@ DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn){
         //
       //  bool exists = false;
             bool isBl;
-        q.exec(strSql);
-
+     //   q.exec(strSql);
+if(q.exec(strSql)){
     while (q.next()){
         //exists=true;
         accountNumber=q.value(0).toString();
@@ -321,13 +326,20 @@ DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn){
         isBl = isBlocked == 1 ? true : false;
 
     }
+} else{
+    QMessageBox::warning(NULL, QObject::tr("Error"),
+                               QObject::tr("Account not found\n"),QMessageBox::Cancel);
+     qWarning("Sql Error");
+}
     return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
 }
+
+
 UniversalAccount getUniversalAccountByCardAndPin(QString card, QString pinn){
         QString strSql = "SELECT * FROM UNIVERSAL_ACCOUNT where account_number = " + card + " AND pin = "+pinn;
         int userIdATM(0), sum(0), limit(0), isBlocked(0);
        // bool exists = false;
-        QString accountNumber, pin, expiryDate, cvvNumber;
+        QString accountNumber(""), pin(""), expiryDate(""), cvvNumber("");
         bool isBl;
 
         //DB
@@ -338,8 +350,8 @@ UniversalAccount getUniversalAccountByCardAndPin(QString card, QString pinn){
         db.open();
         QSqlQuery q;
         //
-        q.exec(strSql);
-
+        //q.exec(strSql);
+if(q.exec(strSql)){
     while (q.next()){
        // exists=true;
         accountNumber=q.value(0).toString();
@@ -352,7 +364,12 @@ UniversalAccount getUniversalAccountByCardAndPin(QString card, QString pinn){
         isBlocked=q.value(7).toInt();
         isBl = isBlocked == 1 ? true : false;
     }
-
+    
+} else{
+    QMessageBox::warning(NULL, QObject::tr("Error"),
+                               QObject::tr("Account not found\n"),QMessageBox::Cancel);
+     qWarning("Sql Error");
+}
 return UniversalAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,expiryDate);
 
 }
@@ -360,7 +377,7 @@ return UniversalAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, is
 CreditAccount getCreditAccountByCardAndPin(QString card, QString pinn){
     QString strSql = "SELECT * FROM CREDIT_ACCOUNT where CREDIT_ACCOUNT.account_number = "+card+" AND pin = "+pinn;
     int userIdATM(0), sum(0), creditTerm(0), creditDebt(0),limit(0),isBlocked(0);
-    QString accountNumber, pin, expiryDate, cvvNumber, creditExpDate;
+    QString accountNumber(""), pin(""), expiryDate(""), cvvNumber(""), creditExpDate("");
 
     DBPath path;
     QSqlDatabase db;
@@ -371,7 +388,7 @@ CreditAccount getCreditAccountByCardAndPin(QString card, QString pinn){
     q.exec(strSql);
  //   bool exists = false;
         bool isBl;
-
+if(q.exec(strSql)){
         while (q.next()){
  //           exists=true;
             accountNumber=q.value(0).toString();
