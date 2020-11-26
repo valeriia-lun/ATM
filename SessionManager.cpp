@@ -182,6 +182,7 @@ void SessionManager::checkCard(QString card){
         else if (getCreditAccountByCardAndPin(_card, pin).cardNumber() != ""){
 _numTry=0;
             _ca=getCreditAccountByCardAndPin(_card, pin);
+
             _isDeposit=false;
             _isCredit=true;
             _isUniversal=false;
@@ -239,8 +240,8 @@ _balanceFailure=false;
         QMessageBox::warning(NULL, QObject::tr("Error"),
                                    QObject::tr("You can not withdraw money from Deposit Account!\n"),QMessageBox::Ok);
     }else if(_isCredit){
-        if (sumOut < _ca.sumOnBalance()){
-            if(sumOut <_ca.limit()){
+        if (sumOut <= _ca.sumOnBalance()){
+            if(sumOut <=_ca.limit()){
                 calculateNotesOut(sumOut);
                 if(isSuccess()){
                     withdrawMoneyFromCreditAccount(sumOut, _ca);
@@ -252,8 +253,8 @@ _balanceFailure=false;
          _balanceFailure=true;
         }
     }else {
-        if (sumOut < _ua.sumOnBalance()){
-            if(sumOut <_ua.limit()){
+        if (sumOut <= _ua.sumOnBalance()){
+            if(sumOut <=_ua.limit()){
                 calculateNotesOut(sumOut);
                 if(isSuccess()){
                    withdrawMoneyFromUniversalAccount(sumOut, _ua);
@@ -308,6 +309,7 @@ void SessionManager::setLimit(int n){
 void SessionManager::putMoneyToMyCredit(int sumOut){
     _limitFailure=false;
     _balanceFailure=false;
+    _ca = getCreditAccountByUserId(selectUserByCard(_card).id());
     if(_isUniversal){
         if (sumOut <= _ua.sumOnBalance()){
             if(sumOut <= _ua.limit()){
@@ -326,6 +328,7 @@ void SessionManager::putMoneyToMyCredit(int sumOut){
 void SessionManager::putMoneyToMyUniversal(int sumOut){
     _limitFailure=false;
     _balanceFailure=false;
+    _ua = getUniversalAccountByUserId(selectUserByCard(_card).id());
     if(_isCredit){
         if (sumOut <= _ca.sumOnBalance()){
             if(sumOut <= _ca.limit()){
@@ -344,6 +347,7 @@ void SessionManager::putMoneyToMyUniversal(int sumOut){
 void SessionManager::putMoneyToMyDeposit(int sumOut){
     _limitFailure=false;
     _balanceFailure=false;
+    _da = getDepositAccountByUserId(selectUserByCard(_card).id());
     if(_isCredit){
         if (sumOut <= _ca.sumOnBalance()){
             if(sumOut <=_ca.limit()){
