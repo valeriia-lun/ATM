@@ -44,7 +44,7 @@ void PutMoneyToMyAccount::on_deposit_clicked()
 {
     QString s=ui->amount->text();
     if(!s.isEmpty()){
-    _sessionManager.putMoneyToMyDeposit(s.toInt(),_da);
+    _sessionManager.putMoneyToMyDeposit(s.toInt());
     if(_sessionManager.limitFailure()){
          ui->amount->setText("");
         QMessageBox::warning(this, QObject::tr("Error"),
@@ -85,7 +85,7 @@ void PutMoneyToMyAccount::on_universal_clicked()
 
     QString s=ui->amount->text();
     if(!s.isEmpty()){
-    _sessionManager.putMoneyToMyUniversal(s.toInt(),_ua);
+    _sessionManager.putMoneyToMyUniversal(s.toInt());
     if(_sessionManager.limitFailure()){
          ui->amount->setText("");
         QMessageBox::warning(this, QObject::tr("Error"),
@@ -125,7 +125,7 @@ void PutMoneyToMyAccount::on_credit_clicked()
 {
     QString s=ui->amount->text();
     if(!s.isEmpty()){
-    _sessionManager.putMoneyToMyCredit(s.toInt(),_ca);
+    _sessionManager.putMoneyToMyCredit(s.toInt());
     if(_sessionManager.limitFailure()){
          ui->amount->setText("");
         QMessageBox::warning(this, QObject::tr("Error"),

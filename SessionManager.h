@@ -19,8 +19,7 @@ private:
     int _totalCashAmount;
   QMap<int,int> _notesMap;
   bool _success;
-  //Активный Аккаунт??
-  //СДЕЛАТЬ ОТСЫЛКАМИ??
+
     static CreditAccount _ca;
     static UniversalAccount _ua;
     static DepositAccount _da;
@@ -84,7 +83,6 @@ public:
     void putMoneyToMyUniversal(int);
     void putMoneyToMyDeposit(int);
     void putMoneyToAnother(int,QString);
-    void putMoneyToAnotherBank(int,QString);
     QString getCard(){return _card;}
     QString getUser(){return (selectUserByCard(_card).firstName()+" "+selectUserByCard(_card).lastName());}
     bool balanceFailure(){return _balanceFailure;}
