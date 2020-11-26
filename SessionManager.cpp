@@ -1,0 +1,456 @@
+#include "SessionManager.h"
+#include <QMessageBox>
+
+
+CreditAccount SessionManager:: _ca;
+UniversalAccount SessionManager:: _ua;
+DepositAccount SessionManager:: _da;
+
+QString SessionManager:: _card;
+QString SessionManager:: _pin;
+bool SessionManager:: _isDeposit;
+bool SessionManager::_isCredit=false;
+bool SessionManager::_isUniversal=false;
+bool SessionManager::_cardPinOk=false;
+
+SessionManager::SessionManager(SessionManager& sm):
+     _totalCashAmount(sm.getTotalCash()),_notesMap(sm.getMap()),_success(sm.isSuccess()),
+    _cardOk(sm.cardNumIsOk()),_numTry(sm.getTry())
+ {
+initialiseNotes();
+ }
+
+//cash disp
+void SessionManager::incashMoney(int n){
+    if(n!=50 && n!=100 && n!=200 && n!=500){
+            _success=false;
+             QMessageBox::warning(NULL, QObject::tr("Error"),
+                                        QObject::tr("Wrong banknote! Try again!"),QMessageBox::Cancel);
+        }else{
+        _notesMap[n]++;
+         setTotalCashAmount();
+           _success=true;
+    }
+
+}
+
+
+void SessionManager::initialiseNotes(){
+  _notesMap[50] = cdb.get50();
+   _notesMap[100] = cdb.get100();
+   _notesMap[200] = cdb.get200();
+   _notesMap[500] = cdb.get500();
+    setTotalCashAmount();
+}
+void SessionManager::setTotalCashAmount(){
+    int total = 0;
+    total += _notesMap[50] * 50;
+    total += _notesMap[100] * 100;
+    total += _notesMap[200] * 200;
+    total += _notesMap[500] * 500;
+   _totalCashAmount=total;
+}
+void SessionManager::calculateNotesOut(int m){
+    _smallAmount=false;
+    _notDivisible=false;
+    _notEnoughMoney=false;
+    _banknotesFailure=false;
+
+    _success=false;
+    QMap<int, int> cashOutMap;
+    if(m < 50){
+            _smallAmount=true;
+        }
+  else  if (m % 50 != 0)
+    {
+        _notDivisible=true;
+
+    }
+ else if(m >= _totalCashAmount){
+        _notEnoughMoney=true;
+
+    }
+    else {
+        int n = m;
+        int _50(0),
+            _100(0),
+            _200(0),
+            _500(0);
+        while (n >= 500 && has500(_500)) {
+            _500++;
+            n -= 500;
+        }
+        if (_500 > 0 && n % 200 != 0 && !has100()) {
+            _500--;
+            n += 500;
+        }
+        while (n >= 200 && has200(_200)) {
+            _200++;
+            n -= 200;
+        }
+        while (n >= 100 && has100(_100)) {
+            _100++;
+            n -= 100;
+        }
+        while (n >= 50 && has50(_50)) {
+            _50++;
+            n -= 50;
+        }
+
+        if (n != 0) {
+            {
+                _banknotesFailure=true;
+            }
+        }
+        else {
+            if(!banknotesFailure() && !notEnoughMoney()&& !notDivisible()){
+            _success=true;
+            cashOutMap[50] = _50;
+            cashOutMap[100] = _100;
+            cashOutMap[200] = _200;
+            cashOutMap[500] = _500;
+            QMessageBox msgBox;
+            QString a="Done successfuly!\nYour set of banknotes:\n";
+            QString f="";
+            QString h="";
+            QString t="";
+            QString fi="";
+            if(_50!=0){
+                  f="\n50$ : "+QString::number(_50);
+            }
+            if(_100!=0){
+                  h="\n100$ : "+QString::number(_100);
+            }
+            if(_200!=0){
+                  t="\n200$ : "+QString::number(_200);
+            }
+            if(_500!=0){
+                  fi="\n500$ : "+QString::number(_500);
+            }
+
+            a=a+f+h+t+fi;
+            msgBox.setText(a);
+            msgBox.exec();
+            updateNotesMap(cashOutMap);
+            setTotalCashAmount();
+}
+        }
+    }
+}
+void SessionManager::updateNotesMap(QMap<int, int> m){
+    cdb.change50(_notesMap[50]-m[50]);
+    cdb.change100(_notesMap[100]-m[100]);
+    cdb.change200(_notesMap[200]-m[200]);
+    cdb.change500(_notesMap[500]-m[500]);
+
+    initialiseNotes();
+
+
+}
+//
+
+
+void SessionManager::checkCard(QString card){
+    _numTry=0;
+    if (cardExists(card)) {
+        if (!cardBlocked(card)) {
+        _cardOk=true;
+        _card=card;
+
+        } else{
+            _cardOk=false;
+            QMessageBox::warning(NULL, QObject::tr("Error"),
+                                       QObject::tr("Card is blocked!\n Please, call your banking assistant!\n"),QMessageBox::Ok);
+        }
+    }else{
+        _cardOk=false;
+         QMessageBox::warning(NULL, QObject::tr("Error"),
+                                    QObject::tr("Wrong card number!\n"),QMessageBox::Ok);
+
+}
+}
+
+ void SessionManager::checkPin(QString pin){
+     if (!getDepositAccountByCardAndPin(_card, pin).cardNumber().isNull()){
+            _da=getDepositAccountByCardAndPin(_card, pin);
+            _numTry=0;
+            _isDeposit=true;
+            _isCredit=false;
+            _isUniversal=false;
+            _cardPinOk=true;
+        }
+        else if (!getCreditAccountByCardAndPin(_card, pin).cardNumber().isNull()){
+_numTry=0;
+            _ca=getCreditAccountByCardAndPin(_card, pin);
+            _isDeposit=false;
+            _isCredit=true;
+            _isUniversal=false;
+            _cardPinOk=true;
+        }
+        else if (!getUniversalAccountByCardAndPin(_card, pin).cardNumber().isNull()){
+         _numTry=0;
+            _ua=getUniversalAccountByCardAndPin(_card, pin);
+            _isDeposit=false;
+            _isCredit=false;
+            _isUniversal=true;
+            _cardPinOk=true;
+
+        }else{
+         _cardPinOk=false;
+          _numTry++;
+         QMessageBox::warning(NULL, QObject::tr("Error"),
+                                              QObject::tr("Wrong PIN! Try again!\n"),QMessageBox::Ok);
+
+        }
+
+}
+
+void SessionManager::putMoney(int sumPut){
+
+if(_isDeposit){
+    incashMoney(sumPut);
+    if(isSuccess()){
+         putMoneyOnDepositAccount(sumPut, _da);
+    }
+}else if(_isCredit){
+    incashMoney(sumPut);
+    if(isSuccess()){
+        putMoneyOnCreditAccount(sumPut, _ca);
+    }
+
+
+}else {
+   incashMoney(sumPut);
+    if(isSuccess()){
+
+         putMoneyOnUniversalAccount(sumPut, _ua);
+    }
+}
+
+}
+void SessionManager::withdrawMoney(int sumOut){
+_limitFailure=false;
+_balanceFailure=false;
+    if(_isDeposit){
+        QMessageBox::warning(NULL, QObject::tr("Error"),
+                                   QObject::tr("You can not withdraw money from Deposit Account!\n"),QMessageBox::Ok);
+    }else if(_isCredit){
+        if (sumOut < _ca.sumOnBalance()){
+            if(sumOut <_ca.limit()){
+                calculateNotesOut(sumOut);
+                if(isSuccess()){
+                    withdrawMoneyFromCreditAccount(sumOut, _ca);
+                }
+            }else{
+               _limitFailure=true;
+            }
+        }else{
+         _balanceFailure=true;
+        }
+    }else {
+        if (sumOut < _ua.sumOnBalance()){
+            if(sumOut <_ua.limit()){
+                calculateNotesOut(sumOut);
+                if(isSuccess()){
+                   withdrawMoneyFromUniversalAccount(sumOut, _ua);
+                }
+            }else{
+               _limitFailure=true;
+            }
+        }else{
+                _balanceFailure=true;
+        }
+
+
+    }
+
+
+}
+int SessionManager::getBalance() const{
+    int balance;
+    if(_isCredit){
+          balance=_ca.sumOnBalance();
+    }else if(_isUniversal){
+       balance=_ua.sumOnBalance();
+    }else if(_isDeposit){
+      balance=_da.sumOnBalance();
+    }
+    return balance;
+
+}
+int SessionManager::getLimit() const{
+    int limit;
+    if(_isCredit){
+       limit = _ca.limit();
+    }else if(_isUniversal){
+       limit=_ua.limit();
+    }else if(_isDeposit){
+       limit = _da.limit();
+    }
+    return limit;
+}
+void SessionManager::setLimit(int n){
+    setNewLimit(_card,n);
+    if(_isCredit){
+       _ca.limit()=n;
+     }else if(_isUniversal){
+        _ua.limit()=n;
+    }else if(_isDeposit){
+        _da.limit()=n;
+    }
+
+}
+void SessionManager::putMoneyToMyCredit(int sumOut,CreditAccount a){
+    _limitFailure=false;
+    _balanceFailure=false;
+    if(_isUniversal){
+        if (sumOut < _ua.sumOnBalance()){
+            if(sumOut <_ua.limit()){
+               tdb.makeTransactionFromUniversalToCredit(_ua,a,sumOut);
+            }else{
+           _limitFailure=true;
+            }
+        }else{
+            _balanceFailure=true;
+        }
+    }else{
+        QMessageBox::warning(NULL, QObject::tr("Error"),
+                                   QObject::tr("Wrong account!\n"),QMessageBox::Ok);
+    }
+}
+void SessionManager::putMoneyToMyUniversal(int sumOut,UniversalAccount a){
+    _limitFailure=false;
+    _balanceFailure=false;
+    if(_isCredit){
+        if (sumOut < _ca.sumOnBalance()){
+            if(sumOut <_ca.limit()){
+                tdb.makeTransactionFromCreditToUniversal(_ca,a,sumOut);
+            }else{
+             _limitFailure=true;
+            }
+        }else{
+          _balanceFailure=true;
+        }
+    }else{
+        QMessageBox::warning(NULL, QObject::tr("Error"),
+                                   QObject::tr("Wrong account!\n"),QMessageBox::Ok);
+    }
+}
+void SessionManager::putMoneyToMyDeposit(int sumOut,DepositAccount a){
+    _limitFailure=false;
+    _balanceFailure=false;
+    if(_isCredit){
+        if (sumOut < _ca.sumOnBalance()){
+            if(sumOut <_ca.limit()){
+                tdb.makeTransactionFromCreditToDeposit(_ca,a,sumOut);
+            }else{
+           _limitFailure=true;
+            }
+        }else{
+              _balanceFailure=true;
+        }
+
+    } else if(_isUniversal){
+        if (sumOut < _ua.sumOnBalance()){
+            if(sumOut <_ua.limit()){
+                tdb.makeTransactionFromUniversalDeposit(_ua,a,sumOut);
+            }else{
+                  _limitFailure=true;
+            }
+        }else{
+    _balanceFailure=true;
+        }
+    }else{
+        QMessageBox::warning(NULL, QObject::tr("Error"),
+                                   QObject::tr("Wrong account!\n"),QMessageBox::Ok);
+    }
+}
+
+void SessionManager::putMoneyToAnother(int sumOut,QString card){
+    _limitFailure=false;
+    _balanceFailure=false;
+    if(_isCredit){
+        if (sumOut < _ca.sumOnBalance()){
+            if(sumOut <_ca.limit()){
+
+         //credit to credit
+if(!getCreditByCard(card).cardNumber().isNull()){
+    CreditAccount _ca2=getCreditByCard(card);
+    tdb.makeTransactionFromCreditToCredit(_ca,_ca2,sumOut);
+
+    //credit to universal
+}else if(!getUniversalByCard(card).cardNumber().isNull()){
+   UniversalAccount _ua2=getUniversalByCard(card);
+    tdb.makeTransactionFromCreditToUniversal(_ca,_ua2,sumOut);
+
+    //credit to deposit
+} else if(!getDepositByCard(card).cardNumber().isNull()){
+   DepositAccount _da2=getDepositByCard(card);
+     tdb.makeTransactionFromCreditToDeposit(_ca,_da2,sumOut);
+ }
+            }else{
+          _limitFailure=true;
+            }
+        }else{
+             _balanceFailure=true;
+        }
+
+
+    }else if(_isUniversal){
+        if (sumOut < _ua.sumOnBalance()){
+            if(sumOut <_ua.limit()){
+
+         //uni to credit
+if(!getCreditByCard(card).cardNumber().isNull()){
+    CreditAccount _ca2=getCreditByCard(card);
+    tdb.makeTransactionFromUniversalToCredit(_ua,_ca2,sumOut);
+
+    //uni to universal
+}else if(!getUniversalByCard(card).cardNumber().isNull()){
+   UniversalAccount _ua2=getUniversalByCard(card);
+    tdb.makeTransactionFromUniversalToUniversal(_ua,_ua2,sumOut);
+
+    //uni to deposit
+} else if(!getDepositByCard(card).cardNumber().isNull()){
+   DepositAccount _da2=getDepositByCard(card);
+     tdb.makeTransactionFromUniversalDeposit(_ua,_da2,sumOut);
+ }
+            }else{
+             _limitFailure=true;
+            }
+        }else{
+   _balanceFailure=true;
+        }
+    }
+
+}
+
+void SessionManager::putMoneyToAnotherBank(int sumOut,QString card){
+    _limitFailure=false;
+    _balanceFailure=false;
+    if(_isCredit){
+        if (sumOut < _ca.sumOnBalance()){
+            if(sumOut <_ca.limit()){
+        tdb.makeTransactionFromCreditToAnother(_ca, card, sumOut);
+            }else{
+           _limitFailure=true;
+            }
+        }else{
+           _balanceFailure=true;
+        }
+    }else if(_isUniversal){
+        if (sumOut < _ua.sumOnBalance()){
+            if(sumOut <_ua.limit()){
+
+         tdb.makeTransactionFromUniversalToAnother(_ua, card, sumOut);
+            }else{
+  _limitFailure=true;
+            }
+        }else{
+        _balanceFailure=true;
+        }
+    }
+
+}
+
+
