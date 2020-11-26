@@ -73,3 +73,15 @@ void deleteUsers(int iduser){
     q.exec(sql);
 }
 
+void createUser(int iduser, QString firstname, QString lastname, QString middlename){
+    QString sql("INSERT INTO USER (id_user,first_name,last_name,middle_name)"
+                        " VALUES(" + QString::number(iduser) + ", '" + firstname + "', '" + lastname + "', '" + middlename + "')");
+
+    DBPath p;
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(p.getPath());
+    db.open();
+    QSqlQuery q;
+    q.exec(sql);
+}

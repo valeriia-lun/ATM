@@ -73,7 +73,7 @@ void setNewLimit(QString card, int amount){
     //
     q.exec("UPDATE DEPOSIT_ACCOUNT set [limit]="+QString::number(amount)+" where account_number =" + card);
     q.clear();
-    q.exec("UPDATE CREDIT_ACCOUNT set [limit]="+QString::number(amount)+"where account_number =" + card);
+    q.exec("UPDATE CREDIT_ACCOUNT set [limit]="+QString::number(amount)+" where account_number =" + card);
     q.clear();
     q.exec("UPDATE UNIVERSAL_ACCOUNT set [limit]="+QString::number(amount)+" where account_number =" + card);
     q.clear();
