@@ -1,5 +1,5 @@
-@@ -0,0 +1,581 @@
 #include "AccountsDB.h"
+#include "UserDB.h"
 void createUniversalAccount(int userIdATM, QString cardNumber, QString pin, QString cvv, double sumOnBalance,
                                         int limit, QString expiryDate,  bool isBlocked){
     UniversalAccount ua(userIdATM,cardNumber,pin,cvv,sumOnBalance,limit,isBlocked,expiryDate);
@@ -520,7 +520,6 @@ UniversalAccount getUniversalAccountByUserId(int id){
  return UniversalAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,expiryDate);
 }
 bool cardBlocked(QString card){
-    bool blocked = false;
     //DB
     DBPath path;
     QSqlDatabase db;
@@ -531,26 +530,46 @@ bool cardBlocked(QString card){
     //
     if(q.exec("SELECT * FROM DEPOSIT_ACCOUNT where DEPOSIT_ACCOUNT.account_number = "+card+" AND isBlocked = 1")){
         if(q.next()){
-             blocked = true;
+             return true;
         }
     }
 
     if(q.exec("SELECT * FROM CREDIT_ACCOUNT where CREDIT_ACCOUNT.account_number = "+card+" AND isBlocked = 1")){
         if(q.next()){
-             blocked = true;
+             return true;
         }
     }
 
     if(q.exec("SELECT * FROM UNIVERSAL_ACCOUNT where UNIVERSAL_ACCOUNT.account_number = "+card+" AND isBlocked = 1")){
          if(q.next()){
-              blocked = true;
+              return true;
          }
     }
 
-   return blocked;
+   return false;
 }
+
+void putMoneyOnAccountByCard(double amount, QString card) {
+ if (cardExists(card)) {
+     int id = selectUserByCard(card).id();
+  UniversalAccount ua = getUniversalAccountByUserId(id);
+  if (ua.cardNumber() != "") {
+   putMoneyOnUniversalAccount(amount, ua);
+  }
+  else {
+   CreditAccount ca = getCreditAccountByUserId(id);
+   if (ca.cardNumber() != "") {
+    putMoneyOnCreditAccount(amount, ca);
+   }
+   else {
+    DepositAccount da = getDepositAccountByUserId(id);
+    putMoneyOnDepositAccount(amount, da);
+   }
+  }
+ }
+}
+
 bool cardExists(QString card) {
-    bool exists = false;
     //DB
     DBPath path;
     QSqlDatabase db;
@@ -561,22 +580,22 @@ bool cardExists(QString card) {
     //
     if(q.exec("SELECT * FROM DEPOSIT_ACCOUNT where DEPOSIT_ACCOUNT.account_number = "+card)){
         if(q.next()){
-             exists = true;
+             return true;
         }
     }
 
     if(q.exec("SELECT * FROM CREDIT_ACCOUNT where CREDIT_ACCOUNT.account_number = "+card)){
         if(q.next()){
-             exists = true;
+             return true;
         }
     }
 
     if(q.exec("SELECT * FROM UNIVERSAL_ACCOUNT where UNIVERSAL_ACCOUNT.account_number = "+card)){
          if(q.next()){
-              exists = true;
+             return true;
          }
     }
 
-   return exists;
+   return false;
 
 }

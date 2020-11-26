@@ -27,7 +27,7 @@
 
     void blockCard(QString card);
     void unblockCard(QString card);
-
+void putMoneyOnAccountByCard(double amount, QString card) ;
     void withdrawMoneyFromUniversalAccount(int amount, UniversalAccount& ua);
 
     void withdrawMoneyFromCreditAccount(int amount, CreditAccount& ca);
