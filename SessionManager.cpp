@@ -388,12 +388,13 @@ void SessionManager::putMoneyToAnother(int sumOut,QString card){
                 }else{
                      makeTransactionFromCreditToAnother(_ca,card,sumOut,false);
                 }
-            }
+            }else{
             _limitFailure=true;
-
-           }
+        }
+    }else{
         _balanceFailure=true;
-    }if(_isUniversal){
+    }
+    }else if(_isUniversal){
         if (sumOut < _ua.sumOnBalance()){
             if(sumOut <_ua.limit()){
                 if(cardExists(card)){
@@ -401,9 +402,11 @@ void SessionManager::putMoneyToAnother(int sumOut,QString card){
                 }else{
                      makeTransactionFromUniversalToAnother(_ua,card,sumOut,false);
                 }
-            }
+            }else{
             _limitFailure=true;
-        }
+            }
+        }else{
         _balanceFailure=true;
+        }
     }
 }
