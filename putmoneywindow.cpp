@@ -85,13 +85,13 @@ void PutMoneyWindow::on_pushButton_clicked()
     QString a=QString::number(_sum) + "$ incashed successfuly!\n";
     msgBox.setText(a);
     msgBox.exec();
-     PasswordWindow ps(_sessionManager,this);
+    // PasswordWindow ps(_sessionManager,this);
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Question", "Do you want to continue?",
                                   QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         hide();
-        ps.exec();
+      //  ps.exec();
     } else {
         qApp->quit();
                      QProcess::startDetached(qApp->arguments()[0], qApp->arguments());

@@ -65,13 +65,13 @@ void WithdrawalWindow::on_pushButton_clicked()
                                    QObject::tr("Enter amount that is divisible by 50\n"),QMessageBox::Ok);
     }
     else{
-     PasswordWindow ps(_sessionManager,this);
+     //PasswordWindow ps(_sessionManager,this);
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Question", "Do you want to continue?",
                                   QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         hide();
-        ps.exec();
+       // ps.exec();
     } else {
         qApp->quit();
                      QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
@@ -101,13 +101,13 @@ void WithdrawalWindow::on_pushButton_2_clicked()
                                    QObject::tr("Enter amount that is divisible by 50\n"),QMessageBox::Ok);
     }
     else{
-     PasswordWindow ps(_sessionManager,this);
+    // PasswordWindow ps(_sessionManager,this);
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Question", "Do you want to continue?",
                                   QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         hide();
-        ps.exec();
+      //  ps.exec();
     } else {
         qApp->quit();
                      QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
@@ -137,13 +137,13 @@ void WithdrawalWindow::on_pushButton_3_clicked()
                                    QObject::tr("Enter amount that is divisible by 50\n"),QMessageBox::Ok);
     }
     else{
-     PasswordWindow ps(_sessionManager,this);
+    // PasswordWindow ps(_sessionManager,this);
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Question", "Do you want to continue?",
                                   QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         hide();
-        ps.exec();
+      //  ps.exec();
     } else {
         qApp->quit();
                      QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
@@ -173,13 +173,13 @@ void WithdrawalWindow::on_pushButton_4_clicked()
                                    QObject::tr("Enter amount that is divisible by 50\n"),QMessageBox::Ok);
     }
     else{
-     PasswordWindow ps(_sessionManager,this);
+    // PasswordWindow ps(_sessionManager,this);
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Question", "Do you want to continue?",
                                   QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         hide();
-        ps.exec();
+      //  ps.exec();
     } else {
         qApp->quit();
                      QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
@@ -216,13 +216,13 @@ void WithdrawalWindow::on_digit_OK_clicked()
                                        QObject::tr("Enter amount that is divisible by 50\n"),QMessageBox::Ok);
         }
         else{
-         PasswordWindow ps(_sessionManager,this);
+        // PasswordWindow ps(_sessionManager,this);
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Question", "Do you want to continue?",
                                       QMessageBox::Yes|QMessageBox::No);
         if (reply == QMessageBox::Yes) {
             hide();
-            ps.exec();
+          //  ps.exec();
         } else {
             qApp->quit();
                          QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
