@@ -63,7 +63,10 @@ const QString& CreditAccount::creditExpiryDate() const{
 
 void CreditAccount::putMoney(double amount) {
     _creditDept -= amount;
+
 }
+
+
 
 void CreditAccount::withdrawMoney(int amount) {
     sumOnBalance() -= amount;

@@ -19,6 +19,7 @@ public:
     const double& creditDept() const;
     const QString& creditExpiryDate() const;
 
+
     void putMoney(double amount) override;
     void close();
     void withdrawMoney(int amount);

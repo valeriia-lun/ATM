@@ -143,6 +143,18 @@ void withdrawMoneyFromCreditAccount(int amount, CreditAccount& ca){
     db.close();
 }
 
+void closeCredit(QString card){
+    DBPath path;
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(path.getPath());
+    db.open();
+    QSqlQuery q;
+    q.exec("UPDATE CREDIT_ACCOUNT set credit_term = 0 where account_number = " + card);
+    q.exec("UPDATE CREDIT_ACCOUNT set credit_debt = 0 where account_number = " + card);
+    q.exec("UPDATE CREDIT_ACCOUNT set credit_expiry_date = '' where account_number = " + card);
+}
+
 void putMoneyOnCreditAccount(int amount, CreditAccount& ca){
     QString card = ca.cardNumber();
     double sum = ca.creditDept() - amount;
