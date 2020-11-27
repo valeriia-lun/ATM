@@ -9,14 +9,13 @@
 
 class DBPath{
 private :
-      // const QString _path="/MAMP/htdocs/ATM/ATM.db";
+       const QString _path="/MAMP/htdocs/ATM/ATM.db";
 //    QString fileName = fi.fileName();
      //const QString _path="/ATM.db";
     //  const QString _path="/Users/valerie/Documents/GitHub/ATM/ATM.db";
     //QFileInfo _fi(_pat);
    // QString _path = _fi.fileName();
-    QDir dir;
-    QString _path = dir.absolutePath() + "/ATM.db";
+   // QString _path = QDir::currentPath() + "/ATM.db";
    //QString _path = QDir::toNativeSeparators(QApplication::applicationDirPath()) + "/ATM.db";
 
 public:
