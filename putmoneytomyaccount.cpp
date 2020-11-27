@@ -177,11 +177,19 @@ void PutMoneyToMyAccount::on_digit_OK_clicked()
     if(_sessionManager.isCredit()){
         if(!getDepositAccountByUserId(_sessionManager.getCreditAccount().userId()).cardNumber().isNull()){
 _da=getDepositAccountByUserId(_sessionManager.getCreditAccount().userId());
-              ui->deposit->setEnabled(true);
+            if(!cardBlocked(_da.cardNumber()) &&  depositIsValid(_da)){
+              //  if(depositIsValid(_da))
+                ui->deposit->setEnabled(true);
+            }
+
     }
         if(!getUniversalAccountByUserId(_sessionManager.getCreditAccount().userId()).cardNumber().isNull()){
             _ua=getUniversalAccountByUserId(_sessionManager.getCreditAccount().userId());
-             ui->universal->setEnabled(true);
+            if(!cardBlocked(_ua.cardNumber()) && universalIsValid(_ua) ){
+                          //  if(universalIsValid(_ua))
+                            ui->universal->setEnabled(true);
+                        }
+
         }else{
             QMessageBox::warning(NULL, QObject::tr("Error"),
                                        QObject::tr("You do not have other accounts\n"),QMessageBox::Ok);
@@ -189,12 +197,20 @@ _da=getDepositAccountByUserId(_sessionManager.getCreditAccount().userId());
         //universal
   } else{
         if(!getCreditAccountByUserId(_sessionManager.getUniversalAccount().userId()).cardNumber().isNull()){
-              ui->credit->setEnabled(true);
+
               _ca=getCreditAccountByUserId(_sessionManager.getUniversalAccount().userId());
+              if(!cardBlocked(_ca.cardNumber()) && creditIsValid(_ca)){
+                //  if(creditIsValid(_ca))
+                  ui->credit->setEnabled(true);
+              }
     }
         if(!getDepositAccountByUserId(_sessionManager.getUniversalAccount().userId()).cardNumber().isNull()){
-             ui->deposit->setEnabled(true);
+
              _da=getDepositAccountByUserId(_sessionManager.getUniversalAccount().userId());
+             if(!cardBlocked(_da.cardNumber()) && depositIsValid(_da) ){
+               //  if(depositIsValid(_da))
+                 ui->deposit->setEnabled(true);
+             }
         }else{
             QMessageBox::warning(NULL, QObject::tr("Error"),
                                        QObject::tr("You do not have other accounts\n"),QMessageBox::Ok);

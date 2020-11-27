@@ -1,5 +1,111 @@
 #include "AccountsDB.h"
 #include "UserDB.h"
+#include <QtDebug>
+int monthToInt(QString month){
+    int res;
+    if(month == "Jan"){
+        return 1;
+    }
+    if(month == "Feb"){
+        return 2;
+    }
+    if(month == "Mar"){
+        return 3;
+    }
+    if(month == "Apr"){
+        return 4;
+    }
+    if(month == "May"){
+        return 5;
+    }
+    if(month == "Jun"){
+        return 6;
+    }
+    if(month == "Jul"){
+        return 7;
+    }
+    if(month == "Aug"){
+        return 8;
+    }
+    if(month == "Sep" || month == "Sept"){
+        return 9;
+    }
+    if(month == "Oct"){
+        return 10;
+    }
+    if(month == "Nov"){
+        return 11;
+    }
+    if(month == "Dec"){
+        return 12;
+    }
+
+}
+bool isEarlierThan(QString date1, QString date2){
+    QStringList list1 = date1.split(" ", QString::SkipEmptyParts);
+    QString month1 = list1[1];
+    int day1 = list1[2].toUInt();
+    QString time1 = list1[3];
+    int year1 = list1[4].toUInt();
+
+     QStringList list1_1 = time1.split(":", QString::SkipEmptyParts);
+     int hour1 = list1_1[0].toUInt();
+     int min1 = list1_1[1].toUInt();
+     int sec1 = list1_1[2].toUInt();
+
+     qDebug() << month1 << day1 << year1 << hour1 <<  min1 << sec1 ;
+
+     QStringList list2 = date2.split(" ", QString::SkipEmptyParts);
+     QString month2 = list2[1];
+     int day2 = list2[2].toUInt();
+     QString time2 = list2[3];
+     int year2 = list1[4].toUInt();
+     year2--;
+      QStringList list2_1 = time2.split(":", QString::SkipEmptyParts);
+      int hour2 = list2_1[0].toUInt();
+      int min2 = list2_1[1].toUInt();
+      int sec2 = list2_1[2].toUInt();
+
+qDebug() << month2 << day2 << year2 << hour2 <<  min2 << sec2 ;
+      if(year1 > year2){
+          return false;
+      }else if(year1 < year2){
+          return true;
+      }else{
+          if(monthToInt(month1) < monthToInt(month2)){
+              return true;
+          }else if(monthToInt(month1) > monthToInt(month2)){
+              return false;
+          }else{
+              if(day1 < day2){
+                  return true;
+              }else if(day1 > day2){
+                  return false;
+              }else{
+                  if(hour1 < hour2){
+                      return true;
+                  }else if(hour1 > hour2){
+                      return false;
+                  }else{
+                      if(min1 < min2){
+                          return true;
+                      }else if(min1 > min2){
+                          return false;
+                      }else{
+                          if(sec1 < sec2){
+                              return true;
+                          }else if(sec1 > sec2){
+                              return false;
+                          }else{
+                              return false;
+                          }
+                      }
+                  }
+              }
+          }
+      }
+}
+
 void createUniversalAccount(int userIdATM, QString cardNumber, QString pin, QString cvv, double sumOnBalance,
                                         int limit, QString expiryDate,  bool isBlocked){
     UniversalAccount ua(userIdATM,cardNumber,pin,cvv,sumOnBalance,limit,isBlocked,expiryDate);
@@ -525,6 +631,60 @@ void putMoneyOnAccountByCard(double amount, QString card) {
    }
   }
  }
+}
+
+bool universalIsValid(UniversalAccount& ua){
+    time_t now = time(0);
+    char* dt1 = ctime(&now);
+    if(isEarlierThan( ua.expiryDate(), dt1)){
+        blockCard(ua.cardNumber());
+        return false;
+    }
+    return true;
+}
+
+bool creditIsValid(CreditAccount& ca){
+    time_t now = time(0);
+        char* dt1 = ctime(&now);
+        if(isEarlierThan( ca.expiryDate(), dt1) || (ca.creditExpiryDate() != "" && isEarlierThan( ca.creditExpiryDate(), dt1))){
+            blockCard(ca.cardNumber());
+                return false;
+        }
+        return true;
+}
+
+bool depositIsValid(DepositAccount& da){
+    time_t now = time(0);
+        char* dt1 = ctime(&now);
+        if(isEarlierThan(da.expiryDate(), dt1)){
+            blockCard(da.cardNumber());
+                return false;
+        }
+        if(da.expiryDate()!="" && isEarlierThan(da.depositExpiryDate(),dt1)){
+            closeDeposite(da);
+        }
+        return true;
+}
+
+void closeDeposite(DepositAccount& da){
+    double sum = da.chargePercentageOfCost();
+    putMoneyOnAccountByCard(sum,getUniversalAccountByUserId(selectUserByCard(da.cardNumber()).id()).cardNumber());
+    DBPath path;
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(path.getPath());
+    db.open();
+    QSqlQuery q;
+    q.exec("UPDATE DEPOSIT_ACCOUNT set sum_on_balance ="+ QString::number(0) + " where account_number =" + da.cardNumber());
+   q.clear();
+   q.exec("UPDATE CREDIT_ACCOUNT set deposit_term = 0 where account_number = " + da.cardNumber());
+      q.clear();
+   q.exec("UPDATE CREDIT_ACCOUNT set deposit_percentage = 0.0 where account_number = " + da.cardNumber());
+      q.clear();
+   q.exec("UPDATE CREDIT_ACCOUNT set deposit_expiry_date = '' where account_number = " + da.cardNumber());
+      q.clear();
+      da.close();
+    db.close();
 }
 
 bool cardExists(QString card) {

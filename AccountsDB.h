@@ -29,7 +29,10 @@
     void unblockCard(QString card);
 void putMoneyOnAccountByCard(double amount, QString card) ;
     void withdrawMoneyFromUniversalAccount(int amount, UniversalAccount& ua);
-
+void closeDeposite(DepositAccount& da);
+bool creditIsValid(CreditAccount& ca);
+bool depositIsValid(DepositAccount& da);
+bool universalIsValid(UniversalAccount& ua);
     void withdrawMoneyFromCreditAccount(int amount, CreditAccount& ca);
 
     void putMoneyOnCreditAccount(int amount, CreditAccount& ca);
