@@ -1,70 +1,78 @@
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <time.h>
 #include "ATMdata/ATMHeaders/accounts/DepositAccount.h"
 
-DepositAccount::DepositAccount(){}
+DepositAccount::DepositAccount() {}
+
 DepositAccount::DepositAccount(int userId, QString cardNumber, QString pin, QString cvv, double sumOnBalance,
-                               int limit, QString expiryDate, bool isBlocked,int depositTerm, double depositPercentage,
-                                QString depositExpiryDate): Account(userId,cardNumber,pin,cvv,sumOnBalance,limit,isBlocked,expiryDate){
-    _depositTerm =  depositTerm;
+                               int limit, QString expiryDate, bool isBlocked, int depositTerm, double depositPercentage,
+                               QString depositExpiryDate) : Account(userId, cardNumber, pin, cvv, sumOnBalance, limit,
+                                                                    isBlocked, expiryDate) {
+    _depositTerm = depositTerm;
     _depositPercentage = depositPercentage;
-     if(depositExpiryDate == ""){
-         time_t now = time(0);
-         now+=depositTerm;
-         char* dt = ctime(&now);
-         depositExpiryDate = dt;
-     } else{
-         _depositExpiryDate = depositExpiryDate;
-     }
+    if (depositExpiryDate == "") {
+        time_t now = time(0);
+        now += depositTerm;
+        char *dt = ctime(&now);
+        depositExpiryDate = dt;
+    } else {
+        _depositExpiryDate = depositExpiryDate;
+    }
 }
 
 DepositAccount::~DepositAccount() {
 
 }
-DepositAccount& DepositAccount::operator=(const DepositAccount& account){
+
+DepositAccount &DepositAccount::operator=(const DepositAccount &account) {
     userId() = account.userId();
     cardNumber() = account.cardNumber();
     pin() = account.pin();
     cvvNumber() = account.cvvNumber();
     sumOnBalance() = account.sumOnBalance();
     limit() = account.limit();
-    expiryDate() =  account.expiryDate();
-    isBlocked() =  account.isBlocked();
+    expiryDate() = account.expiryDate();
+    isBlocked() = account.isBlocked();
     _depositTerm = account._depositTerm;
     _depositPercentage = account._depositPercentage;
     _depositExpiryDate = account._depositExpiryDate;
     return *this;
 }
 
-int& DepositAccount::depositTerm(){
+int &DepositAccount::depositTerm() {
     return _depositTerm;
 }
-QString& DepositAccount::depositExpiryDate(){
+
+QString &DepositAccount::depositExpiryDate() {
     return _depositExpiryDate;
 }
-double& DepositAccount::depositPercentage(){
+
+double &DepositAccount::depositPercentage() {
     return _depositPercentage;
 }
 
-const int& DepositAccount::depositTerm() const{
+const int &DepositAccount::depositTerm() const {
     return _depositTerm;
 }
-const QString& DepositAccount::depositExpiryDate() const{
+
+const QString &DepositAccount::depositExpiryDate() const {
     return _depositExpiryDate;
 }
-const double& DepositAccount::depositPercentage() const{
+
+const double &DepositAccount::depositPercentage() const {
     return _depositPercentage;
 }
 
-void DepositAccount::putMoney(double amount){
+void DepositAccount::putMoney(double amount) {
     sumOnBalance() += amount;
 }
 
-double DepositAccount::chargePercentageOfCost(){
+double DepositAccount::chargePercentageOfCost() {
     return (sumOnBalance() * depositPercentage()) / 100;
 }
 
-void DepositAccount::close(){
+void DepositAccount::close() {
     _depositTerm = 0;
     _depositPercentage = 0;
     _depositExpiryDate = "";

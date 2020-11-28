@@ -1,14 +1,17 @@
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <time.h>
 #include "ATMdata/ATMHeaders/Transaction.h"
 
-Transaction::Transaction(double transactionSum, QString cardSourceNumber, QString cardDestinationNumber, QString transactionDateTime, int transactionId):
-                            _transactionSum(transactionSum), _cardSourceNumber(cardSourceNumber), _cardDestinationNumber(cardDestinationNumber){
-    if(transactionId == 0){
+Transaction::Transaction(double transactionSum, QString cardSourceNumber, QString cardDestinationNumber,
+                         QString transactionDateTime, int transactionId) :
+        _transactionSum(transactionSum), _cardSourceNumber(cardSourceNumber),
+        _cardDestinationNumber(cardDestinationNumber) {
+    if (transactionId == 0) {
         time_t now = time(0);
-        char* dt = ctime(&now);
+        char *dt = ctime(&now);
         _transactionDateTime = dt;
-    }else{
+    } else {
         _transactionId = transactionId;
         _transactionDateTime = transactionDateTime;
     }
@@ -18,9 +21,12 @@ Transaction::Transaction(double transactionSum, QString cardSourceNumber, QStrin
 Transaction::~Transaction() {
     return;
 }
-Transaction::Transaction(const Transaction& t): _transactionId(t._transactionId),
-_transactionDateTime(t._transactionDateTime), _transactionSum(t._transactionSum),
-_cardSourceNumber(t._cardSourceNumber), _cardDestinationNumber(t._cardDestinationNumber){
+
+Transaction::Transaction(const Transaction &t) : _transactionId(t._transactionId),
+                                                 _transactionDateTime(t._transactionDateTime),
+                                                 _transactionSum(t._transactionSum),
+                                                 _cardSourceNumber(t._cardSourceNumber),
+                                                 _cardDestinationNumber(t._cardDestinationNumber) {
     _transactionSum = t._transactionSum;
     _cardSourceNumber = t._cardSourceNumber;
     _cardDestinationNumber = t._cardDestinationNumber;
@@ -28,42 +34,42 @@ _cardSourceNumber(t._cardSourceNumber), _cardDestinationNumber(t._cardDestinatio
     _transactionDateTime = t._transactionDateTime;
 }
 
-int& Transaction::transactionId() {
+int &Transaction::transactionId() {
     return _transactionId;
 }
 
-double& Transaction::transactionSum() {
+double &Transaction::transactionSum() {
     return _transactionSum;
 }
 
-QString& Transaction::cardDestinationNumber() {
+QString &Transaction::cardDestinationNumber() {
     return _cardDestinationNumber;
 }
 
-QString& Transaction::cardSourceNumber() {
+QString &Transaction::cardSourceNumber() {
     return _cardSourceNumber;
 }
 
-QString& Transaction::transactionDateTime() {
+QString &Transaction::transactionDateTime() {
     return _transactionDateTime;
 }
 
-const int& Transaction::transactionId() const{
+const int &Transaction::transactionId() const {
     return _transactionId;
 }
 
-const double& Transaction::transactionSum() const{
+const double &Transaction::transactionSum() const {
     return _transactionSum;
 }
 
-const QString& Transaction::cardDestinationNumber() const{
+const QString &Transaction::cardDestinationNumber() const {
     return _cardDestinationNumber;
 }
 
-const QString& Transaction::cardSourceNumber() const{
+const QString &Transaction::cardSourceNumber() const {
     return _cardSourceNumber;
 }
 
-const QString& Transaction::transactionDateTime() const{
+const QString &Transaction::transactionDateTime() const {
     return _transactionDateTime;
 }

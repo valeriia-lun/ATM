@@ -1,8 +1,7 @@
 #include "CasseteDB.h"
 
 
-
-int get50(){
+int get50() {
     int amount;
     //DB
     DBPath path;
@@ -15,14 +14,14 @@ int get50(){
 
     QString sql("SELECT _50 FROM BANKNOTES");
     q.exec(sql);
-    while(q.next()){
-        amount=q.value(0).toInt();
+    while (q.next()) {
+        amount = q.value(0).toInt();
     }
- db.close();
+    db.close();
     return amount;
 }
 
-int get100(){
+int get100() {
     int amount;
     //DB
     DBPath path;
@@ -35,13 +34,14 @@ int get100(){
 
     QString sql("SELECT _100 FROM BANKNOTES");
     q.exec(sql);
-    while(q.next()){
-        amount=q.value(0).toInt();
+    while (q.next()) {
+        amount = q.value(0).toInt();
     }
- db.close();
+    db.close();
     return amount;
 }
-int get200(){
+
+int get200() {
     int amount;
     //DB
     DBPath path;
@@ -54,13 +54,14 @@ int get200(){
 
     QString sql("SELECT _200 FROM BANKNOTES");
     q.exec(sql);
-    while(q.next()){
-        amount=q.value(0).toInt();
+    while (q.next()) {
+        amount = q.value(0).toInt();
     }
- db.close();
+    db.close();
     return amount;
 }
-int get500(){
+
+int get500() {
     int amount;
     //DB
     DBPath path;
@@ -73,16 +74,16 @@ int get500(){
 
     QString sql("SELECT _500 FROM BANKNOTES");
     q.exec(sql);
-    while(q.next()){
-        amount=q.value(0).toInt();
+    while (q.next()) {
+        amount = q.value(0).toInt();
     }
- db.close();
+    db.close();
     return amount;
 
 }
 
 
-void change50(int n){
+void change50(int n) {
     //DB
     DBPath path;
     QSqlDatabase db;
@@ -91,11 +92,12 @@ void change50(int n){
     db.open();
     QSqlQuery q;
     //
-    QString sql("UPDATE BANKNOTES set _50 = "+QString::number(n));
+    QString sql("UPDATE BANKNOTES set _50 = " + QString::number(n));
     q.exec(sql);
-     db.close();
+    db.close();
 }
-void change100(int n){
+
+void change100(int n) {
     //DB
     DBPath path;
     QSqlDatabase db;
@@ -104,11 +106,12 @@ void change100(int n){
     db.open();
     QSqlQuery q;
     //
-    QString sql("UPDATE BANKNOTES set _100 = "+QString::number(n));
+    QString sql("UPDATE BANKNOTES set _100 = " + QString::number(n));
     q.exec(sql);
-     db.close();
+    db.close();
 }
-void change200(int n){
+
+void change200(int n) {
     //DB
     DBPath path;
     QSqlDatabase db;
@@ -117,11 +120,12 @@ void change200(int n){
     db.open();
     QSqlQuery q;
     //
-    QString sql("UPDATE BANKNOTES set _200 = "+QString::number(n));
+    QString sql("UPDATE BANKNOTES set _200 = " + QString::number(n));
     q.exec(sql);
-     db.close();
+    db.close();
 }
-void change500(int n){
+
+void change500(int n) {
     //DB
     DBPath path;
     QSqlDatabase db;
@@ -130,7 +134,7 @@ void change500(int n){
     db.open();
     QSqlQuery q;
     //
-    QString sql("UPDATE BANKNOTES set _500 = "+QString::number(n));
+    QString sql("UPDATE BANKNOTES set _500 = " + QString::number(n));
     q.exec(sql);
-     db.close();
+    db.close();
 }
