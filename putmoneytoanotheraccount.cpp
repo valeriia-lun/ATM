@@ -1,4 +1,4 @@
-¬#include "putmoneytoanotheraccount.h"
+#include "putmoneytoanotheraccount.h"
 #include "ui_putmoneytoanotheraccount.h"
 #include "passwordwindow.h"
 #include <QProcess>
