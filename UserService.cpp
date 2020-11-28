@@ -60,8 +60,9 @@ User selectUserByCard(QString card){
         }else{
             qWarning("Sql Error");
         }
-
+  db.close();
     return User (id, firstName, lastName, middleName);
+
 }
 
 //NEEDS TEST
@@ -74,6 +75,7 @@ void deleteUsers(int iduser){
     db.open();
     QSqlQuery q;
     q.exec(sql);
+     db.close();
 }
 
 void createUser(int iduser, QString firstname, QString lastname, QString middlename){
@@ -87,4 +89,5 @@ void createUser(int iduser, QString firstname, QString lastname, QString middlen
     db.open();
     QSqlQuery q;
     q.exec(sql);
+     db.close();
 }

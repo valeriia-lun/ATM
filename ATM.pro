@@ -12,7 +12,6 @@ CONFIG += c++11
 
 SOURCES += \
     AccountsService.cpp \
-    CashDispenser.cpp \
     CasseteDB.cpp \
     SessionManager.cpp \
     TransactionService.cpp \
@@ -39,7 +38,6 @@ SOURCES += \
 
 HEADERS += \
     AccountsService.h \
-    CashDispenser.h \
     CasseteDB.h \
     DBPath.h \
     SessionManager.h \

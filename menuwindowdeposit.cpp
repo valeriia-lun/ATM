@@ -76,7 +76,7 @@ void MenuWindowDeposit::on_creditterm_clicked()
 void MenuWindowDeposit::on_perc_clicked()
 {
     QMessageBox msgBox(this);
-    QString a="Your deposit percentage is:\n";
+    QString a="Your deposit percentage is:\n %";
     a+=QString::number(_sessionManager.getDepositAccount().depositPercentage());
     msgBox.setText(a);
     msgBox.exec();

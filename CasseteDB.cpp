@@ -18,7 +18,7 @@ int get50(){
     while(q.next()){
         amount=q.value(0).toInt();
     }
-
+ db.close();
     return amount;
 }
 
@@ -38,7 +38,7 @@ int get100(){
     while(q.next()){
         amount=q.value(0).toInt();
     }
-
+ db.close();
     return amount;
 }
 int get200(){
@@ -57,7 +57,7 @@ int get200(){
     while(q.next()){
         amount=q.value(0).toInt();
     }
-
+ db.close();
     return amount;
 }
 int get500(){
@@ -76,9 +76,11 @@ int get500(){
     while(q.next()){
         amount=q.value(0).toInt();
     }
-
+ db.close();
     return amount;
+
 }
+
 
 void change50(int n){
     //DB
@@ -91,6 +93,7 @@ void change50(int n){
     //
     QString sql("UPDATE BANKNOTES set _50 = "+QString::number(n));
     q.exec(sql);
+     db.close();
 }
 void change100(int n){
     //DB
@@ -103,6 +106,7 @@ void change100(int n){
     //
     QString sql("UPDATE BANKNOTES set _100 = "+QString::number(n));
     q.exec(sql);
+     db.close();
 }
 void change200(int n){
     //DB
@@ -115,6 +119,7 @@ void change200(int n){
     //
     QString sql("UPDATE BANKNOTES set _200 = "+QString::number(n));
     q.exec(sql);
+     db.close();
 }
 void change500(int n){
     //DB
@@ -127,4 +132,5 @@ void change500(int n){
     //
     QString sql("UPDATE BANKNOTES set _500 = "+QString::number(n));
     q.exec(sql);
+     db.close();
 }

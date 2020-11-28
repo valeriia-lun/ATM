@@ -85,5 +85,6 @@ void getAllTransactionsByCard(QString card){
            {
             QMessageBox::warning(NULL, QObject::tr("Error"),
                                        QObject::tr("No transactions\n"),QMessageBox::Cancel);}
+         db.close();
 }
 
