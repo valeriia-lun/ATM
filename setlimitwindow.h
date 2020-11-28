@@ -1,23 +1,27 @@
 #ifndef SETLIMITWINDOW_H
 #define SETLIMITWINDOW_H
 #pragma once
+
 #include <QDialog>
 #include "SessionManager.h"
 #include "question.h"
+
 namespace Ui {
-class SetLimitWindow;
+    class SetLimitWindow;
 }
 
-class SetLimitWindow : public QDialog
-{
+class SetLimitWindow : public QDialog {
     Q_OBJECT
 
 public:
-    explicit SetLimitWindow(SessionManager,QWidget *parent = nullptr);
+    explicit SetLimitWindow(SessionManager, QWidget *parent = nullptr);
+
     ~SetLimitWindow();
 
-private slots:
-    void on_digit_OK_clicked();
+private
+    slots:
+            void on_digit_OK_clicked();
+
     void digit_numbers();
 
     void on_digit_back_clicked();
@@ -27,7 +31,7 @@ private slots:
 private:
     Ui::SetLimitWindow *ui;
     SessionManager _sessionManager;
-     Question *questionwindow;
+    Question *questionwindow;
 };
 
 #endif // SETLIMITWINDOW_H

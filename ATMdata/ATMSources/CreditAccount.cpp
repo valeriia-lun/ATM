@@ -1,28 +1,29 @@
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <time.h>
 #include "ATMdata/ATMHeaders/accounts/CreditAccount.h"
 
-CreditAccount::CreditAccount(){}
+CreditAccount::CreditAccount() {}
 
 CreditAccount::CreditAccount(int creditTerm, double creditDept, int userId, QString cardNumber, QString pin,
                              QString cvv, double sumOnBalance, int limit, bool isBlocked, QString expiryDate,
-                             QString creditExpiryDate) : Account(userId,cardNumber,pin,cvv,sumOnBalance,limit,isBlocked,expiryDate),
-                             _creditDept(creditDept), _creditTerm(creditTerm)
-                             {
-    if(creditExpiryDate.isEmpty()){
+                             QString creditExpiryDate) : Account(userId, cardNumber, pin, cvv, sumOnBalance, limit,
+                                                                 isBlocked, expiryDate),
+                                                         _creditDept(creditDept), _creditTerm(creditTerm) {
+    if (creditExpiryDate.isEmpty()) {
         this->sumOnBalance() = creditDept;
         time_t now = time(0);
         now += creditTerm;
-        char* dt1 = ctime(&now);
+        char *dt1 = ctime(&now);
         _creditExpiryDate = dt1;
-    }else{
+    } else {
         _creditExpiryDate = creditExpiryDate;
     }
 }
 
-CreditAccount::~CreditAccount(){}
+CreditAccount::~CreditAccount() {}
 
-CreditAccount& CreditAccount::operator=(const CreditAccount& account){
+CreditAccount &CreditAccount::operator=(const CreditAccount &account) {
     userId() = account.userId();
     cardNumber() = account.cardNumber();
     pin() = account.pin();
@@ -37,41 +38,41 @@ CreditAccount& CreditAccount::operator=(const CreditAccount& account){
     return *this;
 }
 
-int& CreditAccount::creditTerm(){
+int &CreditAccount::creditTerm() {
     return _creditTerm;
 }
 
-double& CreditAccount::creditDept(){
+double &CreditAccount::creditDept() {
     return _creditDept;
 }
 
-QString& CreditAccount::creditExpiryDate(){
+QString &CreditAccount::creditExpiryDate() {
     return _creditExpiryDate;
 }
 
-const int& CreditAccount::creditTerm() const{
+const int &CreditAccount::creditTerm() const {
     return _creditTerm;
 }
 
-const double& CreditAccount::creditDept() const{
+const double &CreditAccount::creditDept() const {
     return _creditDept;
 }
 
-const QString& CreditAccount::creditExpiryDate() const{
+const QString &CreditAccount::creditExpiryDate() const {
     return _creditExpiryDate;
 }
 
 void CreditAccount::putMoney(double amount) {
-    if(_creditDept == 0){
+    if (_creditDept == 0) {
         sumOnBalance() += amount;
-    }else{
+    } else {
         double sum = _creditDept - amount;
-        if(sum <= 0){
+        if (sum <= 0) {
             close();
-            if(sum < 0){
+            if (sum < 0) {
                 sumOnBalance() -= sum;
             }
-        }else{
+        } else {
             _creditDept -= amount;
         }
     }

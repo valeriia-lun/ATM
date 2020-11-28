@@ -1,6 +1,7 @@
 #ifndef MENUWINDOW_H
 #define MENUWINDOW_H
 #pragma once
+
 #include <QDialog>
 #include <QMessageBox>
 #include "SessionManager.h"
@@ -11,22 +12,24 @@
 #include "transactionhistorywindow.h"
 #include "putmoneytoanotheraccount.h"
 #include "putmoneytomyaccount.h"
+
 namespace Ui {
-class MenuWindow;
+    class MenuWindow;
 }
 
-class MenuWindow : public QDialog
-{
+class MenuWindow : public QDialog {
     Q_OBJECT
 
 public:
     explicit MenuWindow(SessionManager, QWidget *parent = nullptr);
+
     ~MenuWindow();
 
-private slots:
+private
+    slots:
 
 
-    void on_end_session_clicked();
+            void on_end_session_clicked();
 
     void on_put_money_clicked();
 
@@ -48,14 +51,14 @@ private slots:
 
 private:
     Ui::MenuWindow *ui;
-       WithdrawalWindow *withdrawalwindow;
-        PutMoneyWindow *putmoneywindow;
-        SessionManager _sessionManager;
-        Question *questionwindow;
-        SetLimitWindow *setlimitwindow;
-        TransactionHistoryWindow *transactionhistorywindow;
-        PutMoneyToAnotherAccount *putmoneytoanotheraccount;
-        PutMoneyToMyAccount *putmoneytomyaccount;
+    WithdrawalWindow *withdrawalwindow;
+    PutMoneyWindow *putmoneywindow;
+    SessionManager _sessionManager;
+    Question *questionwindow;
+    SetLimitWindow *setlimitwindow;
+    TransactionHistoryWindow *transactionhistorywindow;
+    PutMoneyToAnotherAccount *putmoneytoanotheraccount;
+    PutMoneyToMyAccount *putmoneytomyaccount;
 };
 
 #endif // MENUWINDOW_H

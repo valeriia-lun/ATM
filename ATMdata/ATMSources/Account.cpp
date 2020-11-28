@@ -1,19 +1,24 @@
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <ctime>
 #include "ATMdata/ATMHeaders/accounts/Account.h"
-Account::Account(){
+
+Account::Account() {
 
 }
-Account::Account(int userId, QString cardNumber, QString pin, QString cvv, double sumOnBalance, int limit, bool isBlocked ,
-                 QString expiryDate):_userId(userId), _cardNumber(cardNumber), _pin(pin),
-                 _cvvNumber(cvv), _sumOnBalance(sumOnBalance), _limit(limit), _isBocked(isBlocked){
 
-    if(expiryDate.isEmpty()){
+Account::Account(int userId, QString cardNumber, QString pin, QString cvv, double sumOnBalance, int limit,
+                 bool isBlocked,
+                 QString expiryDate) : _userId(userId), _cardNumber(cardNumber), _pin(pin),
+                                       _cvvNumber(cvv), _sumOnBalance(sumOnBalance), _limit(limit),
+                                       _isBocked(isBlocked) {
+
+    if (expiryDate.isEmpty()) {
         time_t now = time(0);
         now += 29384020;
-        char* dt1 = ctime(&now);
+        char *dt1 = ctime(&now);
         _expiryDate = dt1;
-    }else{
+    } else {
         _expiryDate = expiryDate;
     }
 
@@ -21,7 +26,7 @@ Account::Account(int userId, QString cardNumber, QString pin, QString cvv, doubl
 
 Account::~Account() {}
 
-Account& Account::operator=(const Account& account){
+Account &Account::operator=(const Account &account) {
     _userId = account._userId;
     _cardNumber = account._cardNumber;
     _pin = account._pin;
@@ -32,59 +37,67 @@ Account& Account::operator=(const Account& account){
     return *this;
 }
 
-int&  Account::userId(){
+int &Account::userId() {
     return _userId;
 }
-QString&  Account::cardNumber(){
+
+QString &Account::cardNumber() {
     return _cardNumber;
 }
-QString&  Account::pin(){
+
+QString &Account::pin() {
     return _pin;
 }
 
-QString& Account::expiryDate(){
+QString &Account::expiryDate() {
     return _expiryDate;
 }
 
-QString&  Account::cvvNumber(){
+QString &Account::cvvNumber() {
     return _cvvNumber;
 }
-double&  Account::sumOnBalance(){
+
+double &Account::sumOnBalance() {
     return _sumOnBalance;
 }
-int&  Account::limit(){
+
+int &Account::limit() {
     return _limit;
 }
 
-bool& Account::isBlocked(){
+bool &Account::isBlocked() {
     return _isBocked;
 }
 
-const int&  Account::userId() const{
+const int &Account::userId() const {
     return _userId;
 }
-const QString&  Account::cardNumber() const{
+
+const QString &Account::cardNumber() const {
     return _cardNumber;
 }
-const QString&  Account::pin() const{
+
+const QString &Account::pin() const {
     return _pin;
 }
 
-const QString& Account::expiryDate() const{
+const QString &Account::expiryDate() const {
     return _expiryDate;
 }
 
-const QString&  Account::cvvNumber() const{
+const QString &Account::cvvNumber() const {
     return _cvvNumber;
 }
-const double&  Account::sumOnBalance() const{
+
+const double &Account::sumOnBalance() const {
     return _sumOnBalance;
 }
-const int&  Account::limit() const{
+
+const int &Account::limit() const {
     return _limit;
 }
 
-const bool& Account::isBlocked() const{
+const bool &Account::isBlocked() const {
     return _isBocked;
 }
 

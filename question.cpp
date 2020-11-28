@@ -2,34 +2,31 @@
 #include "ui_question.h"
 #include <QProcess>
 #include <QMessageBox>
+
 Question::Question(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::Question)
-{
+        QDialog(parent),
+        ui(new Ui::Question) {
     ui->setupUi(this);
 }
 
-Question::~Question()
-{
+Question::~Question() {
     delete ui;
 }
 
-void Question::on_pushButton_clicked()
-{
+void Question::on_pushButton_clicked() {
     QMessageBox msgBox;
-    QString a="Thank you for using our ATM!";
+    QString a = "Thank you for using our ATM!";
     msgBox.setText(a);
     msgBox.exec();
     qApp->quit();
-                 QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-   /* SessionManager s;
-    hide();
-    passwindow = new PasswordWindow(s,this);
-    passwindow->show();*/
+    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+    /* SessionManager s;
+     hide();
+     passwindow = new PasswordWindow(s,this);
+     passwindow->show();*/
 }
 
-void Question::on_pushButton_2_clicked()
-{
+void Question::on_pushButton_2_clicked() {
     qApp->quit();
-                 QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }

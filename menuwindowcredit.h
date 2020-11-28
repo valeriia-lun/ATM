@@ -1,5 +1,6 @@
 #ifndef MENUWINDOWCREDIT_H
 #define MENUWINDOWCREDIT_H
+
 #include <QDialog>
 #include <QMessageBox>
 #include "SessionManager.h"
@@ -12,19 +13,20 @@
 #include "putmoneytomyaccount.h"
 
 namespace Ui {
-class MenuWindowCredit;
+    class MenuWindowCredit;
 }
 
-class MenuWindowCredit : public QDialog
-{
+class MenuWindowCredit : public QDialog {
     Q_OBJECT
 
 public:
-    explicit MenuWindowCredit(SessionManager,QWidget *parent = nullptr);
+    explicit MenuWindowCredit(SessionManager, QWidget *parent = nullptr);
+
     ~MenuWindowCredit();
 
-private slots:
-    void on_cash_withdraw_clicked();
+private
+    slots:
+            void on_cash_withdraw_clicked();
 
     void on_put_money_clicked();
 
@@ -53,13 +55,13 @@ private slots:
 private:
     Ui::MenuWindowCredit *ui;
     WithdrawalWindow *withdrawalwindow;
-     PutMoneyWindow *putmoneywindow;
-     SessionManager _sessionManager;
-     Question *questionwindow;
-     SetLimitWindow *setlimitwindow;
-     TransactionHistoryWindow *transactionhistorywindow;
-     PutMoneyToAnotherAccount *putmoneytoanotheraccount;
-     PutMoneyToMyAccount *putmoneytomyaccount;
+    PutMoneyWindow *putmoneywindow;
+    SessionManager _sessionManager;
+    Question *questionwindow;
+    SetLimitWindow *setlimitwindow;
+    TransactionHistoryWindow *transactionhistorywindow;
+    PutMoneyToAnotherAccount *putmoneytoanotheraccount;
+    PutMoneyToMyAccount *putmoneytomyaccount;
 };
 
 #endif // MENUWINDOWCREDIT_H
