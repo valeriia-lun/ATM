@@ -57,7 +57,7 @@ void makeTransactionFromCreditToDeposit(CreditAccount& ca, DepositAccount& da, i
 }
 
 void makeTransactionFromUniversalToCredit(UniversalAccount& ua, CreditAccount& ca, int amount){
-    createTransaction(amount,ua.cardNumber(),ca.cardNumber());
+   createTransaction(amount,ua.cardNumber(),ca.cardNumber());
    withdrawMoneyFromUniversalAccount(amount,ua);
    putMoneyOnCreditAccount(amount,ca);
 }
