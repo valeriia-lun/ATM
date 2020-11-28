@@ -1,4 +1,4 @@
-#include "UserDB.h"
+#include "UserService.h"
 
 User selectUserById(int idd){
     QString sql("SELECT * FROM USER where id_user =" + QString::number(idd));

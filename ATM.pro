@@ -11,12 +11,12 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    AccountsDB.cpp \
+    AccountsService.cpp \
     CashDispenser.cpp \
     CasseteDB.cpp \
     SessionManager.cpp \
-    TransactionDB.cpp \
-    UserDB.cpp \
+    TransactionService.cpp \
+    UserService.cpp \
     main.cpp \
     mainwindow.cpp \
     menuwindow.cpp \
@@ -38,13 +38,13 @@ SOURCES += \
     ATMdata/ATMSources/User.cpp\
 
 HEADERS += \
-    AccountsDB.h \
+    AccountsService.h \
     CashDispenser.h \
     CasseteDB.h \
     DBPath.h \
     SessionManager.h \
-    TransactionDB.h \
-    UserDB.h \
+    TransactionService.h \
+    UserService.h \
     mainwindow.h \
     menuwindow.h \
     menuwindowcredit.h \

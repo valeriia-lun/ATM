@@ -1,6 +1,6 @@
 
-#include "TransactionDB.h"
-#include "AccountsDB.h"
+#include "TransactionService.h"
+#include "AccountsService.h"
 
 void createTransaction(int transactionSum, QString cardSourceNumber, QString cardDestinationNumber){
     Transaction transaction(transactionSum,cardSourceNumber,cardDestinationNumber,"",0);
@@ -11,7 +11,7 @@ void createTransaction(int transactionSum, QString cardSourceNumber, QString car
         db.setDatabaseName(p.getPath());
         db.open();
         QSqlQuery q;
-        q.exec("INSERT INTO TRANSACTION (transaction_sum,transaction_date_time,source_account_number, destination_account_number)"
+        q.exec("INSERT INTO TRANSACTION_ATM (transaction_sum,transaction_date_time,source_account_number, destination_account_number)"
                " VALUES('"  + QString::number(transactionSum) + "', '" + transactionDateTime + "', '" + cardSourceNumber + "', '"+ cardDestinationNumber+"')");
          db.close();
 }
@@ -76,7 +76,7 @@ void getAllTransactionsByCard(QString card){
     db.open();
     QSqlQuery q;
      bool exists = false;
-    QString sql("SELECT * FROM TRANSACTION WHERE source_account_number = " + card + " OR destination_account_number = " + card);
+    QString sql("SELECT * FROM TRANSACTION_ATM WHERE source_account_number = " + card + " OR destination_account_number = " + card);
     q.exec(sql);
     while (q.next()){
             exists=true;

@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QMessageBox>
 #include<QMap>
-#include "AccountsDB.h"
-#include "TransactionDB.h"
-#include "UserDB.h"
+#include "AccountsService.h"
+#include "TransactionService.h"
+#include "UserService.h"
 #include "CasseteDB.h"
 
 class SessionManager{
