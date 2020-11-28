@@ -108,6 +108,7 @@ void MenuWindow::on_showLimit_clicked() {
 void MenuWindow::on_cardexp_clicked() {
     QMessageBox msgBox(this);
     QString a = "Your card expiry date is:\n";
+
     a += _sessionManager.getUniversalAccount().expiryDate();
     msgBox.setText(a);
     msgBox.exec();

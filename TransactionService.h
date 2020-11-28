@@ -23,8 +23,6 @@ void makeTransactionFromUniversalToCredit(UniversalAccount &ua, CreditAccount &c
 
 void makeTransactionFromUniversalDeposit(UniversalAccount &ua, DepositAccount &da, int amount);
 
-void getAllTransactions();
-
 void getAllTransactionsByCard(QString card);
 
 
