@@ -260,6 +260,7 @@ void closeCredit(QString card){
     q.exec("UPDATE CREDIT_ACCOUNT set credit_term = 0 where account_number = " + card);
     q.exec("UPDATE CREDIT_ACCOUNT set credit_debt = 0 where account_number = " + card);
     q.exec("UPDATE CREDIT_ACCOUNT set credit_expiry_date = '' where account_number = " + card);
+    db.close();
 }
 
 void putMoneyOnCreditAccount(int amount, CreditAccount& ca){
@@ -285,6 +286,8 @@ void putMoneyOnCreditAccount(int amount, CreditAccount& ca){
             q.exec("UPDATE CREDIT_ACCOUNT set credit_debt ="+ QString::number(sum) + " where account_number =" + card);
         }
     }
+
+    db.close();
 }
 
 void putMoneyOnUniversalAccount(int amount, UniversalAccount& ua){
@@ -299,7 +302,9 @@ void putMoneyOnUniversalAccount(int amount, UniversalAccount& ua){
        db.open();
        QSqlQuery q;
        //
-       q.exec("UPDATE UNIVERSAL_ACCOUNT set sum_on_balance ="+ QString::number(sum) + " where account_number =" + card);
+
+      q.exec("UPDATE UNIVERSAL_ACCOUNT set sum_on_balance ="+ QString::number(sum) + " where account_number =" + card);
+        db.close();
 }
 
 void putMoneyOnDepositAccount(int amount, DepositAccount& da){
@@ -315,6 +320,7 @@ void putMoneyOnDepositAccount(int amount, DepositAccount& da){
        QSqlQuery q;
        //
       q.exec("UPDATE DEPOSIT_ACCOUNT set sum_on_balance ="+ QString::number(sum) + " where account_number =" + card);
+    db.close();
 }
 
 CreditAccount getCreditAccountByUserId(int id){
@@ -351,6 +357,7 @@ CreditAccount getCreditAccountByUserId(int id){
 
         }
         if(exists){
+            db.close();
             return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate, creditExpDate);
 
         }
@@ -359,6 +366,7 @@ CreditAccount getCreditAccountByUserId(int id){
     }else{
         qWarning("Sql Error");
     }
+         db.close();
        return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate, creditExpDate);
 
 }
@@ -394,6 +402,7 @@ while (q.next()){
     isBlocked=q.value(9).toInt();
     limit=q.value(10).toInt();
     isBl = isBlocked == 1 ? true : false;
+     db.close();
     return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
 
 
@@ -401,7 +410,7 @@ while (q.next()){
 }else{
 qWarning("Sql Error");
 }
-
+ db.close();
 return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
 
 }
@@ -438,18 +447,20 @@ DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn){
         isBlocked=q.value(9).toInt();
         limit=q.value(10).toInt();
         isBl = isBlocked == 1 ? true : false;
+         db.close();
         return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
 
     }
 
         qWarning("d2");
-
+ db.close();
         return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
 
 
 }else{
 qWarning("Sql Error");
 }
+  db.close();
     return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm, depositPerc, depositExpDate);
 }
 
@@ -487,7 +498,7 @@ UniversalAccount getUniversalAccountByCardAndPin(QString card, QString pinn){
 
     }
     if(exists){
-        qWarning("u2");
+         db.close();
         return UniversalAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,expiryDate);
 
     }else{
@@ -497,6 +508,7 @@ UniversalAccount getUniversalAccountByCardAndPin(QString card, QString pinn){
 }else{
 qWarning("Sql Error");
 }
+  db.close();
 return UniversalAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,expiryDate);
 
 }
@@ -531,8 +543,10 @@ CreditAccount getCreditAccountByCardAndPin(QString card, QString pinn){
             limit=q.value(9).toInt();
             isBlocked=q.value(10).toInt();
             isBl = isBlocked == 1 ? true : false;
+             db.close();
  return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate, creditExpDate);
         }
+         db.close();
             return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate, creditExpDate);
 
 
@@ -572,6 +586,7 @@ UniversalAccount getUniversalAccountByUserId(int id){
             isBlocked=q.value(7).toInt();
             isBl = isBlocked == 1 ? true : false;
      //       exists=true;
+             db.close();
              return UniversalAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,expiryDate);
         }
 
@@ -581,6 +596,7 @@ UniversalAccount getUniversalAccountByUserId(int id){
     qWarning("Sql Error");
     }
 
+  db.close();
  return UniversalAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,expiryDate);
 }
 bool cardBlocked(QString card){
@@ -594,22 +610,25 @@ bool cardBlocked(QString card){
     //
     if(q.exec("SELECT * FROM DEPOSIT_ACCOUNT where DEPOSIT_ACCOUNT.account_number = "+card+" AND isBlocked = 1")){
         if(q.next()){
+             db.close();
              return true;
         }
     }
 
     if(q.exec("SELECT * FROM CREDIT_ACCOUNT where CREDIT_ACCOUNT.account_number = "+card+" AND isBlocked = 1")){
         if(q.next()){
+             db.close();
              return true;
         }
     }
 
     if(q.exec("SELECT * FROM UNIVERSAL_ACCOUNT where UNIVERSAL_ACCOUNT.account_number = "+card+" AND isBlocked = 1")){
          if(q.next()){
+              db.close();
               return true;
          }
     }
-
+ db.close();
    return false;
 }
 
@@ -698,22 +717,25 @@ bool cardExists(QString card) {
     //
     if(q.exec("SELECT * FROM DEPOSIT_ACCOUNT where DEPOSIT_ACCOUNT.account_number = "+card)){
         if(q.next()){
+             db.close();
              return true;
         }
     }
 
     if(q.exec("SELECT * FROM CREDIT_ACCOUNT where CREDIT_ACCOUNT.account_number = "+card)){
         if(q.next()){
+             db.close();
              return true;
         }
     }
 
     if(q.exec("SELECT * FROM UNIVERSAL_ACCOUNT where UNIVERSAL_ACCOUNT.account_number = "+card)){
          if(q.next()){
+              db.close();
              return true;
          }
     }
-
+ db.close();
    return false;
 
 }
