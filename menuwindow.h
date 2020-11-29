@@ -28,8 +28,7 @@ public:
 private
     slots:
 
-
-            void on_end_session_clicked();
+    void on_end_session_clicked();
 
     void on_put_money_clicked();
 

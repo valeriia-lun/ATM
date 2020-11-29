@@ -21,13 +21,13 @@ void TransactionHistoryWindow::on_pushButton_6_clicked() {
 void TransactionHistoryWindow::on_pushButton_clicked() {
     QSqlQueryModel *modal = new QSqlQueryModel();
 
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
-//
+
     QSqlQuery *query = new QSqlQuery(db);
     query->prepare(
             "SELECT * FROM TRANSACTION_ATM WHERE source_account_number = " + _sessionManager.getActiveCardNumber() +

@@ -20,7 +20,7 @@ public:
 
 private
     slots:
-            void on_pushButton_5_clicked();
+    void on_pushButton_5_clicked();
 
     void on_pushButton_clicked();
 
@@ -40,7 +40,7 @@ private:
     SessionManager _sessionManager;
     Ui::WithdrawalWindow *ui;
     Question *questionwindow;
-    //MenuWindow *menuwindow;
+
 };
 
 #endif // WITHDRAWALWINDOW_H

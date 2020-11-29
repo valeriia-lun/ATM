@@ -3,14 +3,12 @@
 #include "AccountsService.h"
 #include <SessionManager.h>
 
-//int const MainWindow::EXIT_CODE_REBOOT = -123456789;
+
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    //  db = QSqlDatabase::addDatabase("QSQLITE");
-    // db.setDatabaseName("C:/Users/Tiana_/Documents/ATM/ATM.db");
-    //validateAll();
+
     connect(ui->digit_1, SIGNAL(clicked()), this, SLOT(digit_numbers()));
     connect(ui->digit_2, SIGNAL(clicked()), this, SLOT(digit_numbers()));
     connect(ui->digit_3, SIGNAL(clicked()), this, SLOT(digit_numbers()));
@@ -46,11 +44,7 @@ void MainWindow::on_digit_back_clicked() {
 }
 
 void MainWindow::on_digit_OK_clicked() {
-    //validateAll();
-//    unblockCard("7777");
-//    unblockCard("8886");
-//    unblockCard("2355");
-   // validateAll();
+
     if (!ui->card_number->text().isEmpty()) {
         validateCard(ui->card_number->text());
 

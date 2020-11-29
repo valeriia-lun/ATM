@@ -20,10 +20,7 @@ void Question::on_pushButton_clicked() {
     msgBox.exec();
     qApp->quit();
     QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-    /* SessionManager s;
-     hide();
-     passwindow = new PasswordWindow(s,this);
-     passwindow->show();*/
+
 }
 
 void Question::on_pushButton_2_clicked() {

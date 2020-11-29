@@ -240,7 +240,7 @@ void withdrawMoneyFromUniversalAccount(int amount, UniversalAccount &ua) {
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
+
     q.exec("UPDATE UNIVERSAL_ACCOUNT set sum_on_balance =" + QString::number(sum) + " where account_number =" + card);
     q.clear();
     db.close();
@@ -250,7 +250,7 @@ void withdrawMoneyFromCreditAccount(int amount, CreditAccount &ca) {
     QString card = ca.cardNumber();
     double sum = ca.sumOnBalance() - amount;
     ca.withdrawMoney(amount);
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -311,14 +311,13 @@ void putMoneyOnUniversalAccount(int amount, UniversalAccount &ua) {
     QString card = ua.cardNumber();
     double sum = ua.sumOnBalance() + amount;
     ua.putMoney(amount);
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
 
     q.exec("UPDATE UNIVERSAL_ACCOUNT set sum_on_balance =" + QString::number(sum) + " where account_number =" + card);
     db.close();
@@ -328,14 +327,14 @@ void putMoneyOnDepositAccount(int amount, DepositAccount &da) {
     QString card = da.cardNumber();
     double sum = da.sumOnBalance() + amount;
     da.putMoney(amount);
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
+
     q.exec("UPDATE DEPOSIT_ACCOUNT set sum_on_balance =" + QString::number(sum) + " where account_number =" + card);
     db.close();
 }
@@ -345,14 +344,14 @@ CreditAccount getCreditAccountByUserId(int id) {
     int userIdATM(0), sum(0), creditTerm(0), creditDebt(0), limit(0), isBlocked(0);
     QString accountNumber(""), pin(""), expiryDate(""), cvvNumber(""), creditExpDate("");
 
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
+
     bool isBl;
     if (q.exec(strSql)) {
         while (q.next()) {
@@ -386,14 +385,14 @@ DepositAccount getDepositAccountByUserId(int id) {
     QString accountNumber(""), pin(""), expiryDate(""), cvvNumber(""), depositExpDate("");
     int userIdATM(0), sum(0), depositTerm(0), limit(0), isBlocked(0);
     double depositPerc(0.0);
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
+
     bool isBl;
     if (q.exec(strSql)) {
         while (q.next()) {
@@ -427,7 +426,7 @@ DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn) {
     QString accountNumber(""), pin(""), expiryDate(""), cvvNumber(""), depositExpDate("");
     int userIdATM(0), sum(0), depositTerm(0), limit(0), isBlocked(0);
     double depositPerc(0.0);
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -468,14 +467,14 @@ DepositAccount getDepositAccountByCard(QString card) {
     QString accountNumber(""), pin(""), expiryDate(""), cvvNumber(""), depositExpDate("");
     int userIdATM(0), sum(0), depositTerm(0), limit(0), isBlocked(0);
     double depositPerc(0.0);
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
+
     bool isBl;
     if (q.exec(strSql)) {
         while (q.next()) {
@@ -510,14 +509,13 @@ UniversalAccount getUniversalAccountByCardAndPin(QString card, QString pinn) {
     QString accountNumber(""), pin(""), expiryDate(""), cvvNumber("");
     bool isBl(true);
 
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
 
     if (q.exec(strSql)) {
         while (q.next()) {
@@ -550,7 +548,6 @@ UniversalAccount getUniversalAccountByCard(QString card) {
     QString accountNumber(""), pin(""), expiryDate(""), cvvNumber("");
     bool isBl(true);
 
-    //DB
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -671,14 +668,13 @@ CreditAccount getCreditAccountByCard(QString card) {
 
 UniversalAccount getUniversalAccountByUserId(int id) {
     int userIdATM(0), sum(0), limit(0), isBlocked(0);
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
     QString strSQL = "SELECT * FROM UNIVERSAL_ACCOUNT where user_id =" + QString::number(id);
     QString accountNumber(""), pin(""), expiryDate(""), cvvNumber("");
 
@@ -709,14 +705,14 @@ UniversalAccount getUniversalAccountByUserId(int id) {
 }
 
 bool cardBlocked(QString card) {
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
+
     if (q.exec("SELECT * FROM DEPOSIT_ACCOUNT where DEPOSIT_ACCOUNT.account_number = " + card + " AND isBlocked = 1")) {
         if (q.next()) {
             db.close();
@@ -762,14 +758,8 @@ void putMoneyOnAccountByCard(double amount, QString card) {
 bool universalIsValid(UniversalAccount &ua) {
     time_t now = time(0);
     char *dt1 = ctime(&now);
-  //  qDebug() << "ghj";
-  //  qDebug() << ua.cardNumber();
-  //  qDebug() << dt1;
-  //  qDebug() << isEarlierThan(ua.expiryDate(), dt1);
-
 
     if (isEarlierThan(ua.expiryDate(), dt1)) {
-       // qDebug() << isEarlierThan(ua.expiryDate(), dt1);
         blockCard(ua.cardNumber());
         return false;
     }
@@ -832,14 +822,14 @@ void closeDeposite(DepositAccount &da) {
 }
 
 bool cardExists(QString card) {
-    //DB
+
     DBPath path;
     QSqlDatabase db;
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path.getPath());
     db.open();
     QSqlQuery q;
-    //
+
     if (q.exec("SELECT * FROM DEPOSIT_ACCOUNT where DEPOSIT_ACCOUNT.account_number = " + card)) {
         if (q.next()) {
             db.close();

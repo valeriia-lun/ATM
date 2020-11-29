@@ -20,8 +20,7 @@ public:
 
 private
     slots:
-            void digit_numbers();
-
+    void digit_numbers();
 
     void on_digit_back_clicked();
 

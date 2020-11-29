@@ -38,20 +38,7 @@ void makeTransactionFromCreditToUniversal(CreditAccount &ca, UniversalAccount &u
     withdrawMoneyFromCreditAccount(amount, ca);
     putMoneyOnUniversalAccount(amount, ua);
 }
-//void makeTransactionFromCreditToCredit(CreditAccount& ca, CreditAccount& ca2, int amount){
-//    createTransaction(amount,ca.cardNumber(),ca2.cardNumber());
-//    //
 
-//    withdrawMoneyFromCreditAccount(amount,ca);
-//    putMoneyOnCreditAccount(amount,ca2);
-//}
-//void makeTransactionFromUniversalToUniversal(UniversalAccount& ua, UniversalAccount& ua2, int amount){
-//    createTransaction(amount,ua.cardNumber(),ua2.cardNumber());
-//    //
-
-//    withdrawMoneyFromUniversalAccount(amount,ua);
-//   putMoneyOnUniversalAccount(amount,ua2);
-//}
 void makeTransactionFromCreditToDeposit(CreditAccount &ca, DepositAccount &da, int amount) {
     createTransaction(amount, ca.cardNumber(), da.cardNumber());
     withdrawMoneyFromCreditAccount(amount, ca);
