@@ -800,11 +800,24 @@ bool depositIsValid(DepositAccount &da) {
 
 void validateCard(QString card) {
     UniversalAccount ua = getUniversalAccountByCard(card);
-    universalIsValid(ua);
-    DepositAccount da = getDepositAccountByCard(card);
-    depositIsValid(da);
-    CreditAccount ca = getCreditAccountByCard(card);
-    creditIsValid(ca);
+    if(ua.cardNumber() != ""){
+            universalIsValid(ua);
+    }else{
+        DepositAccount da = getDepositAccountByCard(card);
+        if(da.cardNumber() != ""){
+            depositIsValid(da);
+        }else{
+            CreditAccount ca = getCreditAccountByCard(card);
+            if(ca.cardNumber() != ""){
+                 creditIsValid(ca);
+            }
+
+        }
+
+    }
+
+
+
 }
 
 void closeDeposite(DepositAccount &da) {
