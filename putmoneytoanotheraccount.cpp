@@ -45,6 +45,7 @@ void PutMoneyToAnotherAccount::on_digit_OK_clicked() {
     if (!ui->amount->text().isEmpty() && !ui->card_number->text().isEmpty()) {
         QString s = ui->amount->text();
         QString card = ui->card_number->text();
+        if(card != _sessionManager.getCard()){
         if (cardExists(card)) {
             _sessionManager.putMoneyToAnother(s.toInt(), card);
             if (_sessionManager.limitFailure()) {
@@ -116,6 +117,10 @@ void PutMoneyToAnotherAccount::on_digit_OK_clicked() {
                 ui->card_number->setText("");
             }
         }
+      }else {
+             QMessageBox::warning(this, QObject::tr("Error"),
+                                  QObject::tr("You can't make a transaction to the current card!\n"), QMessageBox::Ok);
+         }
     } else if (ui->amount->text().isEmpty()) {
         _n = 1;
         QMessageBox::warning(this, QObject::tr("Error"),
