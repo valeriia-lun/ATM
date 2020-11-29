@@ -62,14 +62,12 @@ bool isEarlierThan(QString date1, QString date2) {
     int day2 = list2[2].toUInt();
     QString time2 = list2[3];
     int year2 = list2[4].toUInt();
-    // year2--;
+
     QStringList list2_1 = time2.split(":", QString::SkipEmptyParts);
     int hour2 = list2_1[0].toUInt();
     int min2 = list2_1[1].toUInt();
     int sec2 = list2_1[2].toUInt();
 
-    //  qDebug() << year1 << " " << month1 << " " << day1 << " " << time1 ;
-    //  qDebug() << year2 << " " << month2 << " " << day2 << " " << time2 ;
 
     if (year1 > year2) {
         return false;
@@ -815,13 +813,10 @@ void validateCard(QString card) {
         }
 
     }
-
-
-
 }
 
 void closeDeposite(DepositAccount &da) {
-    double sum = da.chargePercentageOfCost();
+    double sum = da.chargePercentageOfCost() + da.sumOnBalance();
     putMoneyOnAccountByCard(sum, getUniversalAccountByUserId(selectUserByCard(da.cardNumber()).id()).cardNumber());
     DBPath path;
     QSqlDatabase db;

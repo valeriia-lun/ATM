@@ -79,24 +79,14 @@ void DepositAccount::close() {
     _depositExpiryDate = "";
 }
 
-void DepositAccount::openNew(int depositTerm, int depositPercentage) {
-    _depositTerm = depositTerm;
-    _depositPercentage = depositPercentage;
-
-    time_t now = time(0);
-    now += depositTerm;
-    QString dt = ctime(&now);
-    _depositExpiryDate = dt;
-}
-
 void DepositAccount::openNew(int depTerm, double sum, double percentage) {
     _depositTerm = depTerm;
     _depositPercentage = percentage;
-    sumOnBalance() = sum;
+    sumOnBalance() += sum;
 
     time_t now = time(0);
     now += depTerm;
-    char *dt = ctime(&now);
+    QString dt = ctime(&now);
     _depositExpiryDate = dt;
 }
 

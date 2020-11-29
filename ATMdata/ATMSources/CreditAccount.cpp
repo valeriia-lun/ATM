@@ -93,7 +93,7 @@ void CreditAccount::close() {
 void CreditAccount::openNew(int creditTerm, double creditDept) {
     _creditTerm = creditTerm;
     _creditDept = creditDept;
-    sumOnBalance() = creditDept;
+    sumOnBalance() += creditDept;
 
     time_t now = time(0);
     now += creditTerm;
