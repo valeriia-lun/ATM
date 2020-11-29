@@ -51,9 +51,9 @@ void MainWindow::on_digit_OK_clicked() {
 //    unblockCard("7777");
 //    unblockCard("8886");
 //    unblockCard("2355");
-
+   // validateAll();
     if (!ui->card_number->text().isEmpty()) {
-        //validateAll();
+
         SessionManager s;
         s.checkCard(ui->card_number->text());
         if (s.cardNumIsOk()) {

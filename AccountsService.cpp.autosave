@@ -786,8 +786,6 @@ if(q1.exec()){
             qDebug() <<q1.value(2).toString();
             CreditAccount ca = getCreditAccountByCard(creditAccountNumber);
             creditIsValid(ca);
-
-
     }
 }
 
