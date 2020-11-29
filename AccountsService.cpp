@@ -762,14 +762,7 @@ void putMoneyOnAccountByCard(double amount, QString card) {
 bool universalIsValid(UniversalAccount &ua) {
     time_t now = time(0);
     char *dt1 = ctime(&now);
-  //  qDebug() << "ghj";
-  //  qDebug() << ua.cardNumber();
-  //  qDebug() << dt1;
-  //  qDebug() << isEarlierThan(ua.expiryDate(), dt1);
-
-
     if (isEarlierThan(ua.expiryDate(), dt1)) {
-       // qDebug() << isEarlierThan(ua.expiryDate(), dt1);
         blockCard(ua.cardNumber());
         return false;
     }
