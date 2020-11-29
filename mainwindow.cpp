@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->digit_8, SIGNAL(clicked()), this, SLOT(digit_numbers()));
     connect(ui->digit_9, SIGNAL(clicked()), this, SLOT(digit_numbers()));
     connect(ui->digit_0, SIGNAL(clicked()), this, SLOT(digit_numbers()));
-validateAll();
+//validateAll();
 }
 
 MainWindow::~MainWindow() {
