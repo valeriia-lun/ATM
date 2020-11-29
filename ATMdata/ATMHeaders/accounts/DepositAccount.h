@@ -36,5 +36,7 @@ public:
 
     void close();
 
+    void openNew(int depTerm, double sum, double percentage);
+
     void openNew(int depositTerm, int depositPercentage);
 };

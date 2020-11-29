@@ -59,9 +59,10 @@ void MenuWindowDeposit::on_showLimit_clicked() {
 
 void MenuWindowDeposit::on_creditterm_clicked() {
     QMessageBox msgBox(this);
-    QString a = "Your deposit term is:\n";
-    a += QString::number(_sessionManager.getDepositAccount().depositTerm());
-    msgBox.setText(a);
+    int time = _sessionManager.getDepositAccount().depositTerm();
+    int day = time / 24 / 3600;
+    int hours = time / 3600 - day * 24;
+    msgBox.setText("Your deposit term is:\n" + QString::number(day) + " days " + QString::number(hours) + " hours ");
     msgBox.exec();
 }
 

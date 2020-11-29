@@ -800,11 +800,11 @@ void closeDeposite(DepositAccount &da) {
     q.exec("UPDATE DEPOSIT_ACCOUNT set sum_on_balance =" + QString::number(0) + " where account_number =" +
            da.cardNumber());
     q.clear();
-    q.exec("UPDATE CREDIT_ACCOUNT set deposit_term = 0 where account_number = " + da.cardNumber());
+    q.exec("UPDATE DEPOSIT_ACCOUNT set deposit_term = 0 where account_number = " + da.cardNumber());
     q.clear();
-    q.exec("UPDATE CREDIT_ACCOUNT set deposit_percentage = 0.0 where account_number = " + da.cardNumber());
+    q.exec("UPDATE DEPOSIT_ACCOUNT set deposit_percentage = 0.0 where account_number = " + da.cardNumber());
     q.clear();
-    q.exec("UPDATE CREDIT_ACCOUNT set deposit_expiry_date = '' where account_number = " + da.cardNumber());
+    q.exec("UPDATE DEPOSIT_ACCOUNT set deposit_expiry_date = '' where account_number = " + da.cardNumber());
     q.clear();
     da.close();
     db.close();

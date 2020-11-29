@@ -15,7 +15,7 @@ DepositAccount::DepositAccount(int userId, QString cardNumber, QString pin, QStr
         time_t now = time(0);
         now += depositTerm;
         char *dt = ctime(&now);
-        depositExpiryDate = dt;
+        _depositExpiryDate = dt;
     } else {
         _depositExpiryDate = depositExpiryDate;
     }
@@ -85,6 +85,17 @@ void DepositAccount::openNew(int depositTerm, int depositPercentage) {
     time_t now = time(0);
     now += depositTerm;
     QString dt = ctime(&now);
+    _depositExpiryDate = dt;
+}
+
+void DepositAccount::openNew(int depTerm, double sum, double percentage){
+    _depositTerm = depTerm;
+    _depositPercentage = percentage;
+    sumOnBalance() = sum;
+
+    time_t now = time(0);
+    now += depTerm;
+    char *dt = ctime(&now);
     _depositExpiryDate = dt;
 }
 
