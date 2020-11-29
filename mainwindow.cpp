@@ -21,7 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->digit_8, SIGNAL(clicked()), this, SLOT(digit_numbers()));
     connect(ui->digit_9, SIGNAL(clicked()), this, SLOT(digit_numbers()));
     connect(ui->digit_0, SIGNAL(clicked()), this, SLOT(digit_numbers()));
-validateAll();
 }
 
 MainWindow::~MainWindow() {
@@ -53,9 +52,12 @@ void MainWindow::on_digit_OK_clicked() {
 //    unblockCard("2355");
    // validateAll();
     if (!ui->card_number->text().isEmpty()) {
+        validateCard(ui->card_number->text());
 
         SessionManager s;
+
         s.checkCard(ui->card_number->text());
+
         if (s.cardNumIsOk()) {
             hide();
             passwindow = new PasswordWindow(s, this);
