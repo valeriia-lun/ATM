@@ -11,7 +11,7 @@ public:
     DepositAccount();
 
     DepositAccount(int userId, QString cardNumber, QString pin, QString cvv, double sumOnBalance,
-                   int limit, QString expiryDate, bool isBlocked, int depositTerm, double depositPercentage,bool isNew,
+                   int limit, QString expiryDate, bool isBlocked, int depositTerm, double depositPercentage, bool isNew,
                    QString depositExpiryDate = "");
 
     ~DepositAccount();
