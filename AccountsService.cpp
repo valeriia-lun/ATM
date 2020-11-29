@@ -764,35 +764,36 @@ void validateAll(){
     db.open();
     QString creditAccountNumber(""),depositAccountNumber(""),universalAccountNumber("");
 
-    QSqlQuery q1("SELECT `account_number` FROM `CREDIT_ACCOUNT`");
-    //int fieldNo = q1.record().indexOf("account_number");
-if(q1.exec()){
-    while (q1.next()) {
+
+    QSqlQuery num1("SELECT COUNT(*) FROM CREDIT_ACCOUNT");
+    int numRows1 = num1.value(0).toInt();
+ for(int i = 0; i < numRows1; i++){
+     QSqlQuery q1("SELECT account_number FROM CREDIT_ACCOUNT WHERE user_id = " + i);
      creditAccountNumber = q1.value(0).toString();
      CreditAccount ca = getCreditAccountByCard(creditAccountNumber);
      creditIsValid(ca);
-    }
+ }
+
+
+ QSqlQuery num2("SELECT COUNT(*) FROM UNIVERSAL_ACCOUNT");
+ int numRows2 = num2.value(0).toInt();
+for(int i = 0; i < numRows2; i++){
+  QSqlQuery q2("SELECT account_number FROM UNIVERSAL_ACCOUNT WHERE user_id = " + i);
+  universalAccountNumber = q2.value(0).toString();
+  UniversalAccount ua = getUniversalAccountByCard(universalAccountNumber);
+  universalIsValid(ua);
 }
 
-    QSqlQuery q2("SELECT `account_number` FROM UNIVERSAL_ACCOUNT");
-    //int fieldNo2 = q2.record().indexOf("account_number");
-if(q2.exec()){
-    while (q2.next()) {
-     universalAccountNumber = q2.value(0).toString();
-     UniversalAccount ua = getUniversalAccountByCard(universalAccountNumber);
-     universalIsValid(ua);
-    }
+QSqlQuery num3("SELECT COUNT(*) FROM DEPOSIT_ACCOUNT");
+int numRows3 = num3.value(0).toInt();
+for(int i = 0; i < numRows3; i++){
+ QSqlQuery q3("SELECT account_number FROM DEPOSIT_ACCOUNT WHERE user_id = " + i);
+ depositAccountNumber = q3.value(0).toString();
+ DepositAccount da = getDepositAccountByCard(depositAccountNumber);
+ depositIsValid(da);
 }
 
-    QSqlQuery q3("SELECT `account_number` FROM DEPOSIT_ACCOUNT");
-    //int fieldNo3 = q3.record().indexOf("account_number");
-if(q3.exec()){
-    while (q3.next()) {
-     depositAccountNumber = q3.value(0).toString();
-     DepositAccount da = getDepositAccountByCard(depositAccountNumber);
-     depositIsValid(da);
-    }
-}
+
 //    if (q.exec("SELECT `account_number` FROM CREDIT_ACCOUNT")) {
 //    while (q.next()) {
 //        // creditAccountNumber = q.ValuesAsRows;
