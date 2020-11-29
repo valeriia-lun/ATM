@@ -285,12 +285,14 @@ void putMoneyOnCreditAccount(int amount, CreditAccount &ca) {
                " where account_number =" + card);
     } else {
         double sum = ca.creditDept() - amount;
+        double debt = ca.creditDept();
         if (sum <= 0) {
-            closeCredit(card);
+
             if (sum < 0) {
-                q.exec("UPDATE CREDIT_ACCOUNT set sum_on_balance =" + QString::number(ca.sumOnBalance() - sum) +
+                q.exec("UPDATE CREDIT_ACCOUNT set sum_on_balance =" + QString::number(ca.sumOnBalance() + (amount - debt)) +
                        " where account_number =" + card);
             }
+             closeCredit(card);
         } else {
             q.exec("UPDATE CREDIT_ACCOUNT set credit_debt =" + QString::number(sum) + " where account_number =" + card);
         }
