@@ -19,8 +19,6 @@ User selectUserById(int idd) {
             middleName = q.value(3).toString();
             return User(id, firstName, lastName, middleName);
         }
-        QMessageBox::warning(NULL, QObject::tr("Error"),
-                             QObject::tr("User not found\n"), QMessageBox::Cancel);
 
     } else {
         qWarning("Sql Error");
