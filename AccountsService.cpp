@@ -1,6 +1,7 @@
 #include "AccountsService.h"
 #include "UserService.h"
 #include <QtDebug>
+#include <QSqlRecord>
 
 int monthToInt(QString month) {
     int res;
@@ -755,6 +756,76 @@ void putMoneyOnAccountByCard(double amount, QString card) {
     }
 }
 
+void validateAll(){
+    DBPath path;
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(path.getPath());
+    db.open();
+    QString creditAccountNumber(""),depositAccountNumber(""),universalAccountNumber("");
+
+    QSqlQuery q1("SELECT `account_number` FROM `CREDIT_ACCOUNT`");
+    //int fieldNo = q1.record().indexOf("account_number");
+if(q1.exec()){
+    while (q1.next()) {
+     creditAccountNumber = q1.value(0).toString();
+     CreditAccount ca = getCreditAccountByCard(creditAccountNumber);
+     creditIsValid(ca);
+    }
+}
+
+    QSqlQuery q2("SELECT `account_number` FROM UNIVERSAL_ACCOUNT");
+    //int fieldNo2 = q2.record().indexOf("account_number");
+if(q2.exec()){
+    while (q2.next()) {
+     universalAccountNumber = q2.value(0).toString();
+     UniversalAccount ua = getUniversalAccountByCard(universalAccountNumber);
+     universalIsValid(ua);
+    }
+}
+
+    QSqlQuery q3("SELECT `account_number` FROM DEPOSIT_ACCOUNT");
+    //int fieldNo3 = q3.record().indexOf("account_number");
+if(q3.exec()){
+    while (q3.next()) {
+     depositAccountNumber = q3.value(0).toString();
+     DepositAccount da = getDepositAccountByCard(depositAccountNumber);
+     depositIsValid(da);
+    }
+}
+//    if (q.exec("SELECT `account_number` FROM CREDIT_ACCOUNT")) {
+//    while (q.next()) {
+//        // creditAccountNumber = q.ValuesAsRows;
+
+//         CreditAccount ca = getCreditAccountByCard(creditAccountNumber);
+//         creditIsValid(ca);
+//    }
+//    }
+//    q.clear();
+
+   // QSqlQuery query("SELECT * FROM artist");
+   //  int fieldNo = query.record().indexOf("country");
+//     while (query.next()) {
+//         QString country = query.value(fieldNo).toString();
+
+//    if (q.exec("SELECT `account_number` FROM `UNIVERSAL_ACCOUNT`")){
+//    while (q.next()) {
+//         universalAccountNumber = q.value(0).toString();
+//         UniversalAccount ua = getUniversalAccountByCard(universalAccountNumber);
+//         universalIsValid(ua);
+//    }
+//    }
+//    q.clear();
+//    if (q.exec("SELECT `account_number` FROM `DEPOSIT_ACCOUNT`")){
+//    while (q.next()) {
+//         depositAccountNumber = q.value(0).toString();
+//         DepositAccount da = getDepositAccountByCard(depositAccountNumber);
+//         depositIsValid(da);
+//    }
+//    }
+   // q.clear();
+    db.close();
+}
 
 bool universalIsValid(UniversalAccount &ua) {
     time_t now = time(0);

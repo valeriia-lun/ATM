@@ -25,7 +25,7 @@ void createDepositAccount(int userIdATM, QString cardNumber, QString pin, QStrin
                           QString depositExpiryDate);
 
 void setNewLimit(QString card, int amount);
-
+void validateAll();
 void blockCard(QString card);
 
 void unblockCard(QString card);

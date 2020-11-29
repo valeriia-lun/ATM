@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     //  db = QSqlDatabase::addDatabase("QSQLITE");
     // db.setDatabaseName("C:/Users/Tiana_/Documents/ATM/ATM.db");
-
+    //validateAll();
     connect(ui->digit_1, SIGNAL(clicked()), this, SLOT(digit_numbers()));
     connect(ui->digit_2, SIGNAL(clicked()), this, SLOT(digit_numbers()));
     connect(ui->digit_3, SIGNAL(clicked()), this, SLOT(digit_numbers()));
@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->digit_8, SIGNAL(clicked()), this, SLOT(digit_numbers()));
     connect(ui->digit_9, SIGNAL(clicked()), this, SLOT(digit_numbers()));
     connect(ui->digit_0, SIGNAL(clicked()), this, SLOT(digit_numbers()));
+validateAll();
 }
 
 MainWindow::~MainWindow() {
@@ -46,12 +47,13 @@ void MainWindow::on_digit_back_clicked() {
 }
 
 void MainWindow::on_digit_OK_clicked() {
-
-    unblockCard("7777");
-    unblockCard("8886");
-    unblockCard("2355");
+    //validateAll();
+//    unblockCard("7777");
+//    unblockCard("8886");
+//    unblockCard("2355");
 
     if (!ui->card_number->text().isEmpty()) {
+        //validateAll();
         SessionManager s;
         s.checkCard(ui->card_number->text());
         if (s.cardNumIsOk()) {
@@ -61,7 +63,7 @@ void MainWindow::on_digit_OK_clicked() {
         }
     } else {
         QMessageBox::warning(this, QObject::tr("Error"),
-                             QObject::tr("Eneter your PIN!\n"), QMessageBox::Ok);
+                             QObject::tr("Enter your PIN!\n"), QMessageBox::Ok);
     }
 }
 

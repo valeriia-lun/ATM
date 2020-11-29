@@ -108,6 +108,7 @@ int main(int argc, char *argv[]) {
     // testing();
     QApplication a(argc, argv);
     MainWindow w;
+    // validateAll();
     w.show();
     return a.exec();
 }
