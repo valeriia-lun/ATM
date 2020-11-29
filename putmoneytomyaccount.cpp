@@ -39,7 +39,7 @@ PutMoneyToMyAccount::~PutMoneyToMyAccount() {
     delete ui;
 }
 
-//deposit
+
 void PutMoneyToMyAccount::on_deposit_clicked() {
     QString s = ui->amount->text();
     if (!s.isEmpty()) {
@@ -60,13 +60,13 @@ void PutMoneyToMyAccount::on_deposit_clicked() {
             a += _da.cardNumber();
             msgBox.setText(a);
             msgBox.exec();
-// PasswordWindow ps(_sessionManager,this);
+
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this, "Question", "Do you want to continue?",
                                           QMessageBox::Yes | QMessageBox::No);
             if (reply == QMessageBox::Yes) {
                 hide();
-                //   ps.exec();
+
             } else {
                 qApp->quit();
                 QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
@@ -79,7 +79,7 @@ void PutMoneyToMyAccount::on_deposit_clicked() {
     }
 }
 
-//uni
+
 void PutMoneyToMyAccount::on_universal_clicked() {
 
     QString s = ui->amount->text();
@@ -101,13 +101,13 @@ void PutMoneyToMyAccount::on_universal_clicked() {
             a += _ua.cardNumber();
             msgBox.setText(a);
             msgBox.exec();
-            //PasswordWindow ps(_sessionManager,this);
+
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this, "Question", "Do you want to continue?",
                                           QMessageBox::Yes | QMessageBox::No);
             if (reply == QMessageBox::Yes) {
                 hide();
-                //   ps.exec();
+
             } else {
                 qApp->quit();
                 QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
@@ -120,7 +120,7 @@ void PutMoneyToMyAccount::on_universal_clicked() {
     }
 }
 
-//credit
+
 void PutMoneyToMyAccount::on_credit_clicked() {
     QString s = ui->amount->text();
     if (!s.isEmpty()) {
@@ -141,13 +141,13 @@ void PutMoneyToMyAccount::on_credit_clicked() {
             a += _ca.cardNumber();
             msgBox.setText(a);
             msgBox.exec();
-// PasswordWindow ps(_sessionManager,this);
+
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this, "Question", "Do you want to continue?",
                                           QMessageBox::Yes | QMessageBox::No);
             if (reply == QMessageBox::Yes) {
                 hide();
-                //   ps.exec();
+
             } else {
                 qApp->quit();
                 QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
@@ -170,12 +170,11 @@ void PutMoneyToMyAccount::on_digit_back_clicked() {
 
 void PutMoneyToMyAccount::on_digit_OK_clicked() {
 
-    //credit
     if (_sessionManager.isCredit()) {
         if (!getDepositAccountByUserId(_sessionManager.getCreditAccount().userId()).cardNumber().isNull()) {
             _da = getDepositAccountByUserId(_sessionManager.getCreditAccount().userId());
             if (!cardBlocked(_da.cardNumber()) && depositIsValid(_da)) {
-                //  if(depositIsValid(_da))
+
                 ui->deposit->setEnabled(true);
             }
 
@@ -183,7 +182,7 @@ void PutMoneyToMyAccount::on_digit_OK_clicked() {
         if (!getUniversalAccountByUserId(_sessionManager.getCreditAccount().userId()).cardNumber().isNull()) {
             _ua = getUniversalAccountByUserId(_sessionManager.getCreditAccount().userId());
             if (!cardBlocked(_ua.cardNumber()) && universalIsValid(_ua)) {
-                //  if(universalIsValid(_ua))
+
                 ui->universal->setEnabled(true);
             }
 
@@ -191,13 +190,13 @@ void PutMoneyToMyAccount::on_digit_OK_clicked() {
             QMessageBox::warning(NULL, QObject::tr("Error"),
                                  QObject::tr("You do not have other accounts\n"), QMessageBox::Ok);
         }
-        //universal
+
     } else {
         if (!getCreditAccountByUserId(_sessionManager.getUniversalAccount().userId()).cardNumber().isNull()) {
 
             _ca = getCreditAccountByUserId(_sessionManager.getUniversalAccount().userId());
             if (!cardBlocked(_ca.cardNumber()) && creditIsValid(_ca)) {
-                //  if(creditIsValid(_ca))
+
                 ui->credit->setEnabled(true);
             }
         }
@@ -205,7 +204,7 @@ void PutMoneyToMyAccount::on_digit_OK_clicked() {
 
             _da = getDepositAccountByUserId(_sessionManager.getUniversalAccount().userId());
             if (!cardBlocked(_da.cardNumber()) && depositIsValid(_da)) {
-                //  if(depositIsValid(_da))
+
                 ui->deposit->setEnabled(true);
             }
         } else {

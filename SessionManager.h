@@ -43,7 +43,6 @@ public:
 
     ~SessionManager() {}
 
-    //cash disp
     bool has50(int x = 0) { return _notesMap[50] - x > 0; }
 
     bool has100(int x = 0) { return _notesMap[100] - x > 0; }

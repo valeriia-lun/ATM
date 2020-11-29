@@ -20,7 +20,7 @@ public:
 
 private
     slots:
-            void on_digit_back_clicked();
+    void on_digit_back_clicked();
 
     void on_digit_OK_clicked();
 

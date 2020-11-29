@@ -27,7 +27,7 @@ public:
 private
     slots:
 
-            void on_put_money_clicked();
+    void on_put_money_clicked();
 
     void on_balance_inquiry_clicked();
 

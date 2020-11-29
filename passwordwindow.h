@@ -17,7 +17,7 @@ class PasswordWindow : public QDialog {
     Q_OBJECT
 
 public:
-    //explicit PasswordWindow(QWidget *parent = nullptr);
+
     explicit PasswordWindow(SessionManager, QWidget *parent = nullptr);
 
     ~PasswordWindow();
@@ -32,7 +32,7 @@ private:
 
 private
     slots:
-            void digit_numbers();
+    void digit_numbers();
 
     void on_digit_back_clicked();
 

@@ -26,7 +26,7 @@ public:
 
 private
     slots:
-            void on_cash_withdraw_clicked();
+    void on_cash_withdraw_clicked();
 
     void on_put_money_clicked();
 

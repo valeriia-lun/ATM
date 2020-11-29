@@ -22,14 +22,14 @@ public:
 
 private
     slots:
-            void digit_numbers();
+    void digit_numbers();
 
     void on_digit_back_clicked();
 
     void on_digit_OK_clicked();
 
 private:
-    //  static int const EXIT_CODE_REBOOT;
+
     Ui::MainWindow *ui;
     PasswordWindow *passwindow;
 };

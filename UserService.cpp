@@ -64,7 +64,7 @@ User selectUserByCard(QString card) {
 
 }
 
-//NEEDS TEST
+
 void deleteUsers(int iduser) {
     QString sql("DELETE FROM USER WHERE id_user = " + QString::number(iduser));
     DBPath p;
