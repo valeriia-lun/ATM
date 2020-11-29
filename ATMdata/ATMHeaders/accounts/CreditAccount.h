@@ -11,7 +11,7 @@ public:
     CreditAccount();
 
     CreditAccount(int creditTerm, double creditDept, int userId, QString cardNumber, QString pin, QString cvv,
-                  double sumOnBalance, int limit, bool isBlocked, QString expiryDate, QString creditExpiryDate = "");
+                  double sumOnBalance, int limit, bool isBlocked, QString expiryDate, bool isNew, QString creditExpiryDate = "");
 
     ~CreditAccount();
 

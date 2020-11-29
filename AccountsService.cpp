@@ -130,7 +130,7 @@ void createCreditAccount(int creditTerm, double creditDept, int userIdATM, QStri
                          double sumOnBalance, int limit, bool isBlocked, QString expiryDate,
                          QString creditExpiryDate) {
 
-    CreditAccount ca(creditTerm, creditDept, userIdATM, cardNumber, pin, cvv, sumOnBalance, limit, isBlocked, "");
+    CreditAccount ca(creditTerm, creditDept, userIdATM, cardNumber, pin, cvv, sumOnBalance, limit, isBlocked, "",true);
     expiryDate = ca.expiryDate();
     creditExpiryDate = ca.creditExpiryDate();
     sumOnBalance = ca.sumOnBalance();
@@ -365,13 +365,13 @@ CreditAccount getCreditAccountByUserId(int id) {
             isBl = isBlocked == 1 ? true : false;
             db.close();
             return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,
-                                 expiryDate, creditExpDate);
+                                 expiryDate,false, creditExpDate);
         }
     } else {
         qWarning("Sql Error");
     }
     db.close();
-    return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate,
+    return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate,false,
                          creditExpDate);
 }
 
@@ -605,7 +605,7 @@ CreditAccount getCreditAccountByCardAndPin(QString card, QString pinn) {
             isBl = isBlocked == 1 ? true : false;
             db.close();
             return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,
-                                 expiryDate, creditExpDate);
+                                 expiryDate, false,creditExpDate);
         }
 
 
@@ -613,7 +613,7 @@ CreditAccount getCreditAccountByCardAndPin(QString card, QString pinn) {
         qWarning("Sql Error");
     }
     db.close();
-    return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate,
+    return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate,false,
                          creditExpDate);
 }
 
@@ -647,18 +647,18 @@ CreditAccount getCreditAccountByCard(QString card) {
             isBl = isBlocked == 1 ? true : false;
             db.close();
             return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,
-                                 expiryDate, creditExpDate);
+                                 expiryDate,false, creditExpDate);
         }
         db.close();
         return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl,
-                             expiryDate, creditExpDate);
+                             expiryDate, false, creditExpDate);
 
 
     } else {
         qWarning("Sql Error");
     }
     db.close();
-    return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate,
+    return CreditAccount(creditTerm, creditDebt, userIdATM, accountNumber, pin, cvvNumber, sum, limit, isBl, expiryDate,false,
                          creditExpDate);
 }
 
