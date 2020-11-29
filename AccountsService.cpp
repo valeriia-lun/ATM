@@ -759,46 +759,6 @@ void putMoneyOnAccountByCard(double amount, QString card) {
     }
 }
 
-void validateAll(){
-    DBPath path;
-    QSqlDatabase db;
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(path.getPath());
-    db.open();
-    QString creditAccountNumber(""),depositAccountNumber(""),universalAccountNumber("");
-
-
-    QSqlQuery num1("SELECT COUNT(*) FROM CREDIT_ACCOUNT");
-    int numRows1 = num1.value(0).toInt();
- for(int i = 0; i < numRows1; i++){
-     QSqlQuery q1("SELECT account_number FROM CREDIT_ACCOUNT WHERE CREDIT_ACCOUNT.user_id = " + i);
-     creditAccountNumber = q1.value(0).toString();
-     CreditAccount ca = getCreditAccountByCard(creditAccountNumber);
-     creditIsValid(ca);
- }
-
-
- QSqlQuery num2("SELECT COUNT(*) FROM UNIVERSAL_ACCOUNT");
- int numRows2 = num2.value(0).toInt();
-for(int i = 0; i < numRows2; i++){
-  QSqlQuery q2("SELECT account_number FROM UNIVERSAL_ACCOUNT WHERE UNIVERSAL_ACCOUNT.user_id = " + i);
-  universalAccountNumber = q2.value(0).toString();
-  UniversalAccount ua = getUniversalAccountByCard(universalAccountNumber);
-  universalIsValid(ua);
-}
-
-QSqlQuery num3("SELECT COUNT(*) FROM DEPOSIT_ACCOUNT");
-int numRows3 = num3.value(0).toInt();
-for(int i = 0; i < numRows3; i++){
- QSqlQuery q3("SELECT account_number FROM DEPOSIT_ACCOUNT WHERE DEPOSIT_ACCOUNT.user_id = " + i);
- depositAccountNumber = q3.value(0).toString();
- DepositAccount da = getDepositAccountByCard(depositAccountNumber);
- depositIsValid(da);
-}
-
-    db.close();
-}
-
 bool universalIsValid(UniversalAccount &ua) {
     time_t now = time(0);
     char *dt1 = ctime(&now);
@@ -838,6 +798,15 @@ bool depositIsValid(DepositAccount &da) {
         closeDeposite(da);
     }
     return true;
+}
+
+void validateCard(QString card){
+    UniversalAccount ua = getUniversalAccountByCard(card);
+    universalIsValid(ua);
+    DepositAccount da = getDepositAccountByCard(card);
+    depositIsValid(da);
+    CreditAccount ca = getCreditAccountByCard(card);
+    creditIsValid(ca);
 }
 
 void closeDeposite(DepositAccount &da) {
