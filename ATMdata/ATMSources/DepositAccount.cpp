@@ -6,12 +6,12 @@
 DepositAccount::DepositAccount() {}
 
 DepositAccount::DepositAccount(int userId, QString cardNumber, QString pin, QString cvv, double sumOnBalance,
-                               int limit, QString expiryDate, bool isBlocked, int depositTerm, double depositPercentage,
+                               int limit, QString expiryDate, bool isBlocked, int depositTerm, double depositPercentage,bool isNew,
                                QString depositExpiryDate) : Account(userId, cardNumber, pin, cvv, sumOnBalance, limit,
                                                                     isBlocked, expiryDate) {
     _depositTerm = depositTerm;
     _depositPercentage = depositPercentage;
-    if (depositExpiryDate == "") {
+    if (depositExpiryDate == "" && isNew) {
         time_t now = time(0);
         now += depositTerm;
         char *dt = ctime(&now);

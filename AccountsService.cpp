@@ -158,7 +158,7 @@ void createCreditAccount(int creditTerm, double creditDept, int userIdATM, QStri
 void createDepositAccount(int userIdATM, QString cardNumber, QString pin, QString cvv, double sumOnBalance,
                           int limit, QString expiryDate, bool isBlocked, int depositTerm, int depositPercentage,
                           QString depositExpiryDate) {
-    DepositAccount da(userIdATM, cardNumber, pin, cvv, sumOnBalance, limit, "", false, depositTerm, depositPercentage,
+    DepositAccount da(userIdATM, cardNumber, pin, cvv, sumOnBalance, limit, "", false, depositTerm, depositPercentage,true,
                       "");
     expiryDate = da.expiryDate();
     depositExpiryDate = da.depositExpiryDate();
@@ -411,14 +411,14 @@ DepositAccount getDepositAccountByUserId(int id) {
             isBl = isBlocked == 1 ? true : false;
             db.close();
             return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm,
-                                  depositPerc, depositExpDate);
+                                  depositPerc,false, depositExpDate);
         }
     } else {
         qWarning("Sql Error");
     }
     db.close();
     return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm,
-                          depositPerc, depositExpDate);
+                          depositPerc, false, depositExpDate);
 
 }
 
@@ -451,7 +451,7 @@ DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn) {
             isBl = isBlocked == 1 ? true : false;
             db.close();
             return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm,
-                                  depositPerc, depositExpDate);
+                                  depositPerc,false, depositExpDate);
         }
 
 
@@ -460,7 +460,7 @@ DepositAccount getDepositAccountByCardAndPin(QString card, QString pinn) {
     }
     db.close();
     return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm,
-                          depositPerc, depositExpDate);
+                          depositPerc,false, depositExpDate);
 }
 
 DepositAccount getDepositAccountByCard(QString card) {
@@ -493,14 +493,14 @@ DepositAccount getDepositAccountByCard(QString card) {
             isBl = isBlocked == 1 ? true : false;
             db.close();
             return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm,
-                                  depositPerc, depositExpDate);
+                                  depositPerc,false, depositExpDate);
         }
     } else {
         qWarning("Sql Error");
     }
     db.close();
     return DepositAccount(userIdATM, accountNumber, pin, cvvNumber, sum, limit, expiryDate, isBl, depositTerm,
-                          depositPerc, depositExpDate);
+                          depositPerc,false, depositExpDate);
 }
 
 
