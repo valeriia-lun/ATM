@@ -6,11 +6,11 @@
 CreditAccount::CreditAccount() {}
 
 CreditAccount::CreditAccount(int creditTerm, double creditDept, int userId, QString cardNumber, QString pin,
-                             QString cvv, double sumOnBalance, int limit, bool isBlocked, QString expiryDate,
+                             QString cvv, double sumOnBalance, int limit, bool isBlocked, QString expiryDate,bool isNew,
                              QString creditExpiryDate) : Account(userId, cardNumber, pin, cvv, sumOnBalance, limit,
                                                                  isBlocked, expiryDate),
                                                          _creditDept(creditDept), _creditTerm(creditTerm) {
-    if (creditExpiryDate.isEmpty()) {
+    if (creditExpiryDate.isEmpty() && isNew) {
         this->sumOnBalance() = creditDept;
         time_t now = time(0);
         now += creditTerm;
