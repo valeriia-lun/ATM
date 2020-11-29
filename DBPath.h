@@ -9,10 +9,6 @@
 #include <QtSql/QSqlQuery>
 
 class DBPath {
-private :
-    const QString _path="/MAMP/htdocs/ATM/ATM.db";
-    //const QString _path="/ATM.db";
-   // const QString _path = "/Users/valerie/Documents/GitHub/ATM/ATM.db";
 public:
 
     DBPath() {}
@@ -20,10 +16,18 @@ public:
     ~DBPath() {}
 
     QString getPath() {
-        //qDebug() << "App path : " << qApp->applicationDirPath();
-        qDebug() << "PATH" << _path;
-        return _path;
-    }
+            QString s=QCoreApplication::applicationDirPath();
+            QString res;
+            for(int i=0;i<s.length();i++){
+                if(s.at(i)==QChar('b')&&s.at(i+1)==QChar('u')&&s.at(i+2)=='i'&&s.at(i+3)==QChar('l')&&s.at(i+4)==QChar('d')){
+                        break;
+            }else{
+                    res+=s.at(i);
+                }
+            }
+
+            return res+"ATM/ATM.db";
+        }
 };
 
 
