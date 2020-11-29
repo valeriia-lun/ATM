@@ -6,7 +6,8 @@
 DepositAccount::DepositAccount() {}
 
 DepositAccount::DepositAccount(int userId, QString cardNumber, QString pin, QString cvv, double sumOnBalance,
-                               int limit, QString expiryDate, bool isBlocked, int depositTerm, double depositPercentage,bool isNew,
+                               int limit, QString expiryDate, bool isBlocked, int depositTerm, double depositPercentage,
+                               bool isNew,
                                QString depositExpiryDate) : Account(userId, cardNumber, pin, cvv, sumOnBalance, limit,
                                                                     isBlocked, expiryDate) {
     _depositTerm = depositTerm;
@@ -88,7 +89,7 @@ void DepositAccount::openNew(int depositTerm, int depositPercentage) {
     _depositExpiryDate = dt;
 }
 
-void DepositAccount::openNew(int depTerm, double sum, double percentage){
+void DepositAccount::openNew(int depTerm, double sum, double percentage) {
     _depositTerm = depTerm;
     _depositPercentage = percentage;
     sumOnBalance() = sum;
