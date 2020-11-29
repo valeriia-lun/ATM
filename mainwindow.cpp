@@ -45,7 +45,7 @@ void MainWindow::on_digit_back_clicked() {
 void MainWindow::on_digit_OK_clicked() {
 
     if (!ui->card_number->text().isEmpty()) {
-        validateCard(ui->card_number->text());
+       // validateCard(ui->card_number->text());
 
         SessionManager s;
 
